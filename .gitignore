@@ -176,4 +176,9 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+### 로컬에서 작업 시 Feature/\#{이슈번호}마다 달라지는 환경설정 금지하기 위한 .gitignore
+src/main/resources/bootstrap-dev.yaml
+src/main/resources/bootstrap-prod.yaml
+src/test/resources/bootstrap-test.yaml
+
 # End of https://www.toptal.com/developers/gitignore/api/java,macos,intellij+all,gradle
