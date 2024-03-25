@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.flywaydb.flyway' version '8.5.13'
 }
 
 ext {
@@ -41,6 +42,9 @@ dependencies {
     implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
+    //flyway 설정
+    implementation 'org.flywaydb:flyway-core'
 }
 
 dependencyManagement {
