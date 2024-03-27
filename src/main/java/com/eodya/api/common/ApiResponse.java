@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 
 @Builder(access = AccessLevel.PRIVATE)
-public record ApiResponse(boolean success, String message, Object data) {
+public record ApiResponse(boolean success, String code, String message, Object data) {
     public static ApiResponse success(String message, Object data){
         return ApiResponse.builder()
                 .success(true)
@@ -20,9 +20,10 @@ public record ApiResponse(boolean success, String message, Object data) {
                 .build();
     }
 
-    public static ApiResponse fail(String message){
+    public static ApiResponse fail(String code, String message){
         return ApiResponse.builder()
                 .success(false)
+                .code(code)
                 .message(message)
                 .build();
     }
