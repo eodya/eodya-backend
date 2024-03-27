@@ -1,8 +1,8 @@
 spring:
   application:
-    name: eoda
+    name: eodya
   cloud:
     config:
       uri: http://localhost:8888
       profile: prod
-      label: main
+      label:
