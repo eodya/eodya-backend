@@ -1,19 +1,16 @@
-package com.eodya.api.entity;
+package com.eodya.api.place.domain;
 
+import com.eodya.api.address.domain.AddressDepth1;
+import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.common.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import com.eodya.api.review.domain.Review;
+import com.eodya.api.users.domain.User;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,8 +18,9 @@ import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "place")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Place extends BaseEntity {
 
     @Id
@@ -42,8 +40,10 @@ public class Place extends BaseEntity {
     @NotNull
     private String addressDetail;
 
+    @NotNull
     private int recommendCount;
 
+    @NotNull
     private int bookmarkCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -66,7 +66,7 @@ public class Place extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
-        user.getPlaces().add(this);
+        this.user.getPlaces().add(this);
     }
 
     @Builder
@@ -83,12 +83,10 @@ public class Place extends BaseEntity {
         this.name = name;
         this.image = image;
         this.addressDetail = addressDetail;
-        setUser(user);
         this.recommendCount = 0;
         this.bookmarkCount = 0;
         this.depth1 = addressDepth1;
         this.depth2 = addressDepth2;
+        setUser(user);
     }
-
-
 }

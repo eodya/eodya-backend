@@ -1,12 +1,6 @@
-package com.eodya.api.entity;
+package com.eodya.api.place.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,8 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "place_tag")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlaceTag {
 
     @Id
@@ -31,7 +26,7 @@ public class PlaceTag {
 
     public void setPlace(Place place) {
         this.place = place;
-        place.getPlaceTags().add(this);
+        this.place.getPlaceTags().add(this);
     }
 
     @Builder
@@ -39,5 +34,4 @@ public class PlaceTag {
         this.name = name;
         setPlace(place);
     }
-
 }

@@ -1,6 +1,6 @@
 package com.eodya.api.fixture.domain;
 
-import com.eodya.api.entity.User;
+import com.eodya.api.users.domain.User;
 
 public class UserFixture {
 
