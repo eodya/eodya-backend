@@ -1,6 +1,6 @@
 package com.eodya.api.entity;
 
-import com.eodya.api.entity.superclass.TimeStamped;
+import com.eodya.api.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,12 +18,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class AddressDepth2 extends TimeStamped {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AddressDepth2 extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_depth2_id")
     private Long id;
 
+    @NotNull
     private String name;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_depth1_id")
     private AddressDepth1 depth1;

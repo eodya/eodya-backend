@@ -1,4 +1,4 @@
-package com.eodya.api.entity.common;
+package com.eodya.api.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
