@@ -4,5 +4,7 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-      profile: prod
+      profile: test
       label:
+  profiles:
+    active: test

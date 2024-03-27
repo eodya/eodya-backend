@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: eodya
-  cloud:
-    config:
-      uri: http://localhost:8888
-      profile: test
-      label:
