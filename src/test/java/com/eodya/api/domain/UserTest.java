@@ -34,7 +34,7 @@ public class UserTest {
         User user = UserFixture.userBuild(userName, OAuthId, OAuthProvider);
 
         //when & then
-        assertEquals(user.getBookmarks().size(), 0);
+        assertEquals(user.getBookMarks().size(), 0);
         assertEquals(user.getRecommendations().size(), 0);
         assertEquals(user.getRecommendations().size(), 0);
     }
