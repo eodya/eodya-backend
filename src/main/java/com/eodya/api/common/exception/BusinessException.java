@@ -3,7 +3,7 @@ package com.eodya.api.common.exception;
 import lombok.Getter;
 
 @Getter
-public class BusinessException extends RuntimeException {
+public abstract class BusinessException extends RuntimeException {
 
     private final ExceptionCode exceptionCode;
     private final Object[] rejectedValues;

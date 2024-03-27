@@ -1,5 +1,6 @@
 package com.eodya.api.bookmark.domain;
 
+import com.eodya.api.bookmark.util.BookmarkStatusConverter;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.users.domain.User;
@@ -9,6 +10,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static com.eodya.api.bookmark.domain.BookmarkStatus.*;
 
 @Getter
 @Entity
@@ -22,7 +25,9 @@ public class Bookmark extends BaseEntity {
     private Long id;
 
     @NotNull
-    private boolean status;
+    @Convert(converter = BookmarkStatusConverter.class)
+    @Column(length = 20)
+    private BookmarkStatus status = FALSE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -39,7 +44,7 @@ public class Bookmark extends BaseEntity {
 
     @Builder
     private Bookmark(
-            boolean status,
+            BookmarkStatus status,
             User user,
             Place place
     ) {

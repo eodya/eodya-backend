@@ -1,15 +1,19 @@
 package com.eodya.api.recommendation.util;
 
 import com.eodya.api.recommendation.domain.RecommendationStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.core.convert.converter.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-
-@Component
-public class RecommendationStatusConverter implements Converter<String, RecommendationStatus> {
+@Converter
+public class RecommendationStatusConverter implements AttributeConverter<RecommendationStatus, String> {
 
     @Override
-    public RecommendationStatus convert(String status) {
+    public String convertToDatabaseColumn(RecommendationStatus recommendationStatus) {
+        return recommendationStatus.getDescription();
+    }
+
+    @Override
+    public RecommendationStatus convertToEntityAttribute(String status) {
         return RecommendationStatus.from(status);
     }
 }
