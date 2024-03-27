@@ -1,6 +1,6 @@
 package com.eodya.api.bookmark.dto.request;
 
-import com.eodya.api.bookmark.domain.BookMarkStatus;
+import com.eodya.api.bookmark.domain.BookmarkStatus;
 import lombok.*;
 
 @Getter
@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookMarkChangeStatusRequest {
 
-    private BookMarkStatus status;
+    private BookmarkStatus status;
 }

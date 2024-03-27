@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum BookMarkExceptionCode implements ExceptionCode {
+public enum BookmarkExceptionCode implements ExceptionCode {
 
     BOOKMARK_STATUS_NOT_FOUND(HttpStatus.NOT_FOUND, "BOO-001", "북마크 상태를 찾을 수 없음"),
     ;

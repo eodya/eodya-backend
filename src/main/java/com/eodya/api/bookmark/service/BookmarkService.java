@@ -1,8 +1,8 @@
 package com.eodya.api.bookmark.service;
 
-import com.eodya.api.bookmark.domain.BookMark;
+import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.bookmark.dto.request.BookMarkChangeStatusRequest;
-import com.eodya.api.bookmark.repository.BookMarkRepository;
+import com.eodya.api.bookmark.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BookmarkService {
 
-    private final BookMarkRepository bookmarkRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     public void updateBookmarkStatus(
             Long placeId,
             BookMarkChangeStatusRequest changeStatusRequest
     ) {
-        BookMark bookMark = bookmarkRepository.getBookMarkById(placeId);
+        Bookmark bookMark = bookmarkRepository.getBookMarkById(placeId);
     }
 }

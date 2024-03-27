@@ -1,6 +1,7 @@
 package com.eodya.api.common.exception;
 
 import com.eodya.api.common.dto.ExceptionResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -33,7 +34,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception e) {
+
         return ResponseEntity.status(COMMON_INTERNAL_SERVER_ERROR.getStatus())
                 .body(ExceptionResponse.from(COMMON_INTERNAL_SERVER_ERROR.getCode()));
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ExceptionResponse> handleBusinessException(BusinessException e) {
+        ExceptionCode exceptionCode = e.getExceptionCode();
+
+        return ResponseEntity.status(exceptionCode.getStatus())
+                .body(ExceptionResponse.from(exceptionCode.getCode()));
     }
 }

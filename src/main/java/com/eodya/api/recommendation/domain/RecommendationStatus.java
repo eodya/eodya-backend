@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.eodya.api.recommendation.exception.RecommendationExceptionCode.*;
 
@@ -34,6 +35,6 @@ public enum RecommendationStatus {
     }
 
     private static final Map<String, RecommendationStatus> statusMap =
-            Collections.unmodifiableMap(Arrays.stream(values())
+            Collections.unmodifiableMap(Stream.of(values())
                     .collect(Collectors.toMap(RecommendationStatus::getDescription, Function.identity())));
 }

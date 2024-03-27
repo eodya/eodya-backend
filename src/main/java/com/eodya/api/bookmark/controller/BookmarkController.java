@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/bookmark")
-public class BookMarkController {
+public class BookmarkController {
 
     private final BookmarkService bookmarkService;
 

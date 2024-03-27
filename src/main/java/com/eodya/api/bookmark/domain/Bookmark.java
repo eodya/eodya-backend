@@ -1,6 +1,6 @@
 package com.eodya.api.bookmark.domain;
 
-import com.eodya.api.bookmark.util.BookMarkStatusConverter;
+import com.eodya.api.bookmark.util.BookmarkStatusConverter;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.users.domain.User;
@@ -11,13 +11,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static com.eodya.api.bookmark.domain.BookMarkStatus.*;
+import static com.eodya.api.bookmark.domain.BookmarkStatus.*;
 
 @Getter
 @Entity
 @Table(name = "bookmark")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BookMark extends BaseEntity {
+public class Bookmark extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,9 @@ public class BookMark extends BaseEntity {
     private Long id;
 
     @NotNull
-    @Convert(converter = BookMarkStatusConverter.class)
+    @Convert(converter = BookmarkStatusConverter.class)
     @Column(length = 20)
-    private BookMarkStatus status = FALSE;
+    private BookmarkStatus status = FALSE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -39,12 +39,12 @@ public class BookMark extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
-        this.user.getBookMarks().add(this);
+        this.user.getBookmarks().add(this);
     }
 
     @Builder
-    private BookMark(
-            BookMarkStatus status,
+    private Bookmark(
+            BookmarkStatus status,
             User user,
             Place place
     ) {

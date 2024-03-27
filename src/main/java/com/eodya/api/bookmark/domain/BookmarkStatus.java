@@ -1,22 +1,22 @@
 package com.eodya.api.bookmark.domain;
 
-import com.eodya.api.bookmark.exception.BookMarkException;
+import com.eodya.api.bookmark.exception.BookmarkException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static com.eodya.api.bookmark.exception.BookMarkExceptionCode.*;
+import static com.eodya.api.bookmark.exception.BookmarkExceptionCode.*;
 
 @Getter
 @RequiredArgsConstructor
-public enum BookMarkStatus {
+public enum BookmarkStatus {
 
     TRUE("생성"),
     FALSE("삭제"),
@@ -26,14 +26,14 @@ public enum BookMarkStatus {
     private final String description;
 
     @JsonCreator
-    public static BookMarkStatus from(String description) throws BookMarkException {
+    public static BookmarkStatus from(String description) throws BookmarkException {
         if (statusMap.containsKey(description)) {
             return statusMap.get(description);
         }
-        throw new BookMarkException(BOOKMARK_STATUS_NOT_FOUND, description);
+        throw new BookmarkException(BOOKMARK_STATUS_NOT_FOUND, description);
     }
 
-    private static final Map<String, BookMarkStatus> statusMap =
-            Collections.unmodifiableMap(Arrays.stream(values())
-                    .collect(Collectors.toMap(BookMarkStatus::getDescription, Function.identity())));
+    private static final Map<String, BookmarkStatus> statusMap =
+            Collections.unmodifiableMap(Stream.of(values())
+                    .collect(Collectors.toMap(BookmarkStatus::getDescription, Function.identity())));
 }

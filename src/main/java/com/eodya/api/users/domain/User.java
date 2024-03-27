@@ -1,6 +1,6 @@
 package com.eodya.api.users.domain;
 
-import com.eodya.api.bookmark.domain.BookMark;
+import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.recommendation.domain.Recommendation;
 import com.eodya.api.review.domain.Review;
@@ -55,7 +55,7 @@ public class User extends BaseEntity {
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<BookMark> bookMarks = new ArrayList<>();
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Recommendation> recommendations = new ArrayList<>();
