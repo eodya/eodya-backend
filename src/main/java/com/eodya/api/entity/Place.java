@@ -14,7 +14,7 @@ import jakarta.persistence.OneToOne;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.geo.Point;
+import org.locationtech.jts.geom.*;
 
 @Getter
 @NoArgsConstructor
