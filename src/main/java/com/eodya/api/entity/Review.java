@@ -1,25 +1,20 @@
 package com.eodya.api.entity;
 
 import com.eodya.api.common.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
+
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "review")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity {
 
     @Id
@@ -28,8 +23,9 @@ public class Review extends BaseEntity {
     private Long id;
 
     @NotNull
-    private LocalDate review_date;
+    private LocalDate reviewDate;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private PlaceStatus placeStatus;
 
@@ -45,11 +41,26 @@ public class Review extends BaseEntity {
 
     public void setPlace(Place place) {
         this.place = place;
-        place.getReviews().add(this);
+        this.place.getReviews().add(this);
     }
 
     public void setUser(User user) {
         this.user = user;
-        user.getReviews().add(this);
+        this.user.getReviews().add(this);
+    }
+
+    @Builder
+    private Review(
+            LocalDate reviewDate,
+            PlaceStatus placeStatus,
+            String image,
+            Place place,
+            User user
+    ) {
+        this.reviewDate = reviewDate;
+        this.placeStatus = placeStatus;
+        this.image = image;
+        setPlace(place);
+        setUser(user);
     }
 }
