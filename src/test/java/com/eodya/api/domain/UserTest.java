@@ -28,7 +28,6 @@ public class UserTest {
     @DisplayName("새로운 유저를 생성하면, 유저의 북마크, 추천, 리뷰의 수는 0이다.")
     void createUser_bookmark_review_recommend_size_test() {
         //given
-        Long fakeId = 1L;
         String userName = "재훈";
         String OAuthId = "123456";
         String OAuthProvider = "KAKAO";
