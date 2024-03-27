@@ -32,6 +32,9 @@ public class Review extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PlaceStatus placeStatus;
 
+    @NotNull
+    private String reviewContent;
+
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,11 +60,13 @@ public class Review extends BaseEntity {
             LocalDate reviewDate,
             PlaceStatus placeStatus,
             String image,
+            String reviewContent,
             Place place,
             User user
     ) {
         this.reviewDate = reviewDate;
         this.placeStatus = placeStatus;
+        this.reviewContent = reviewContent;
         this.image = image;
         setPlace(place);
         setUser(user);
