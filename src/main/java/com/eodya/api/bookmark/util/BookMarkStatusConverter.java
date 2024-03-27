@@ -1,14 +1,19 @@
 package com.eodya.api.bookmark.util;
 
 import com.eodya.api.bookmark.domain.BookMarkStatus;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-@Component
-public class BookMarkStatusConverter implements Converter<String, BookMarkStatus> {
+@Converter
+public class BookMarkStatusConverter implements AttributeConverter<BookMarkStatus, String> {
 
     @Override
-    public BookMarkStatus convert(String status) {
+    public String convertToDatabaseColumn(BookMarkStatus bookMarkStatus) {
+        return bookMarkStatus.getDescription();
+    }
+
+    @Override
+    public BookMarkStatus convertToEntityAttribute(String status) {
         return BookMarkStatus.from(status);
     }
 }

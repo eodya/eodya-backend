@@ -1,6 +1,6 @@
 package com.eodya.api.bookmark.domain;
 
-import com.eodya.api.bookmark.util.BookMarkStatusAttributeConverter;
+import com.eodya.api.bookmark.util.BookMarkStatusConverter;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.users.domain.User;
@@ -25,7 +25,7 @@ public class BookMark extends BaseEntity {
     private Long id;
 
     @NotNull
-    @Convert(converter = BookMarkStatusAttributeConverter.class)
+    @Convert(converter = BookMarkStatusConverter.class)
     @Column(length = 20)
     private BookMarkStatus status = FALSE;
 
