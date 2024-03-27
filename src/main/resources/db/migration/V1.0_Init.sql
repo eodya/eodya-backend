@@ -34,12 +34,12 @@ CREATE TABLE `address_depth1`
 
 CREATE TABLE `recommendation`
 (
-    `id`         Long     NOT NULL,
-    `user_id`    Long     NOT NULL,
-    `place_id`   Long     NOT NULL,
-    `status`     Boolean  NOT NULL,
-    `created_at` DateTime NOT NULL,
-    `updated_at` DateTime NOT NULL
+    `id`         Long        NOT NULL,
+    `user_id`    Long        NOT NULL,
+    `place_id`   Long        NOT NULL,
+    `status`     varchar(20) NOT NULL,
+    `created_at` DateTime    NOT NULL,
+    `updated_at` DateTime    NOT NULL
 );
 
 CREATE TABLE `bookmark`
