@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,6 +29,12 @@ public class PlaceTag {
     public void setPlace(Place place) {
         this.place = place;
         place.getPlaceTags().add(this);
+    }
+
+    @Builder
+    private PlaceTag(String name, Place place) {
+        this.name = name;
+        setPlace(place);
     }
 
 }

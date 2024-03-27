@@ -8,7 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
@@ -35,15 +37,26 @@ public class User extends TimeStamped {
     private String OAuthProvider;
 
     @OneToMany(mappedBy = "user")
-    private List<Place> places;
+    private List<Place> places = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Bookmark> bookmarks;
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Recommendation> recommendations;
+    private List<Recommendation> recommendations = new ArrayList<>();
+
+    @Builder
+    private User(
+            String nickname,
+            String OAuthId,
+            String OAuthProvider
+    ) {
+        this.nickname = nickname;
+        this.OAuthId = OAuthId;
+        this.OAuthProvider = OAuthProvider;
+    }
 
 }
