@@ -1,4 +1,4 @@
-package com.eodya.api.entity.superclass;
+package com.eodya.api.entity.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class TimeStamped {
+public class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)

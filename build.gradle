@@ -49,8 +49,11 @@ dependencies {
     //flyway 설정
     implementation 'org.flywaydb:flyway-core'
 
-    // JPA의 Spatial type -> MySQL point
+    //JPA의 Spatial type -> MySQL point
     implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '6.4.1.Final'
+
+    //validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // 추가
 }
 
 dependencyManagement {
