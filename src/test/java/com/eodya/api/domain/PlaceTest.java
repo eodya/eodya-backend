@@ -1,9 +1,9 @@
 package com.eodya.api.domain;
 
-import com.eodya.api.entity.AddressDepth1;
-import com.eodya.api.entity.AddressDepth2;
-import com.eodya.api.entity.Place;
-import com.eodya.api.entity.User;
+import com.eodya.api.address.domain.AddressDepth1;
+import com.eodya.api.address.domain.AddressDepth2;
+import com.eodya.api.place.domain.Place;
+import com.eodya.api.users.domain.User;
 import com.eodya.api.fixture.domain.AddressDepthFixture;
 import com.eodya.api.fixture.domain.PlaceFixture;
 import com.eodya.api.fixture.domain.UserFixture;

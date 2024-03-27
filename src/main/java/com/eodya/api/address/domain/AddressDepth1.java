@@ -1,4 +1,4 @@
-package com.eodya.api.entity;
+package com.eodya.api.address.domain;
 
 import com.eodya.api.common.entity.BaseEntity;
 import jakarta.persistence.*;

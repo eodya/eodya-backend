@@ -1,6 +1,9 @@
-package com.eodya.api.entity;
+package com.eodya.api.review.domain;
 
 import com.eodya.api.common.entity.BaseEntity;
+import com.eodya.api.place.domain.Place;
+import com.eodya.api.place.domain.PlaceStatus;
+import com.eodya.api.users.domain.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 

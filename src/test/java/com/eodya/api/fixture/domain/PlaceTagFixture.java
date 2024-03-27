@@ -1,7 +1,7 @@
 package com.eodya.api.fixture.domain;
 
-import com.eodya.api.entity.Place;
-import com.eodya.api.entity.PlaceTag;
+import com.eodya.api.place.domain.Place;
+import com.eodya.api.place.domain.PlaceTag;
 
 public class PlaceTagFixture {
 

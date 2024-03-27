@@ -1,6 +1,10 @@
-package com.eodya.api.entity;
+package com.eodya.api.users.domain;
 
+import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
+import com.eodya.api.recommendation.domain.Recommendation;
+import com.eodya.api.review.domain.Review;
+import com.eodya.api.place.domain.Place;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

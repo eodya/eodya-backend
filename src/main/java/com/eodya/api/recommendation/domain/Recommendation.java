@@ -1,6 +1,8 @@
-package com.eodya.api.entity;
+package com.eodya.api.recommendation.domain;
 
 import com.eodya.api.common.entity.BaseEntity;
+import com.eodya.api.place.domain.Place;
+import com.eodya.api.users.domain.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -10,13 +12,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "bookmark")
+@Table(name = "recommendation")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Bookmark extends BaseEntity {
+public class Recommendation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bookmark_id")
+    @Column(name = "recommendation_id")
     private Long id;
 
     @NotNull
@@ -32,11 +34,11 @@ public class Bookmark extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
-        this.user.getBookmarks().add(this);
+        this.user.getRecommendations().add(this);
     }
 
     @Builder
-    private Bookmark(
+    private Recommendation(
             boolean status,
             User user,
             Place place

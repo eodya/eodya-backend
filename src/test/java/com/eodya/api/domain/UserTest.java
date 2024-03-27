@@ -1,6 +1,6 @@
 package com.eodya.api.domain;
 
-import com.eodya.api.entity.User;
+import com.eodya.api.users.domain.User;
 import com.eodya.api.fixture.domain.UserFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

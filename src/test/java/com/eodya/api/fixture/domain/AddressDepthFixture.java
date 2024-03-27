@@ -1,7 +1,7 @@
 package com.eodya.api.fixture.domain;
 
-import com.eodya.api.entity.AddressDepth1;
-import com.eodya.api.entity.AddressDepth2;
+import com.eodya.api.address.domain.AddressDepth1;
+import com.eodya.api.address.domain.AddressDepth2;
 
 public class AddressDepthFixture {
 

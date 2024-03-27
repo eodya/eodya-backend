@@ -1,9 +1,9 @@
 package com.eodya.api.fixture.domain;
 
-import com.eodya.api.entity.AddressDepth1;
-import com.eodya.api.entity.AddressDepth2;
-import com.eodya.api.entity.Place;
-import com.eodya.api.entity.User;
+import com.eodya.api.address.domain.AddressDepth1;
+import com.eodya.api.address.domain.AddressDepth2;
+import com.eodya.api.place.domain.Place;
+import com.eodya.api.users.domain.User;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;

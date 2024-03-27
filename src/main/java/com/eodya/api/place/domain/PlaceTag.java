@@ -1,4 +1,4 @@
-package com.eodya.api.entity;
+package com.eodya.api.place.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
