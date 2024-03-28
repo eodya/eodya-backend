@@ -65,6 +65,17 @@ CREATE TABLE `review`
     `updated_at`     DateTime      NOT NULL
 );
 
+CREATE TABLE `review_image`
+(
+    `id`         Long        NOT NULL,
+    `review_id`  Long        NOT NULL,
+    `image_url`  varchar(600) NOT NULL,
+    `created_at` DateTime    NOT NULL,
+    `updated_at` DateTime    NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`review_id`) REFERENCES `review` (`id`)
+);
+
 CREATE TABLE `place_tag`
 (
     `id`         Long         NOT NULL,
