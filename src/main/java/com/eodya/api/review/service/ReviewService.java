@@ -45,9 +45,9 @@ public class ReviewService {
         Review savedReview = reviewRepository.save(review);
 
         if (images != null && !images.isEmpty()) {
-            for (MultipartFile imageFile : images) {
-                String imageUrl = s3Service.uploadFile(imageFile);
+            List<String> imageUrls = s3Service.uploadFiles(images); // 여러 파일을 한 번에 업로드하고 URL 리스트를 받음
 
+            for (String imageUrl : imageUrls) {
                 ReviewImage reviewImage = ReviewImage.builder()
                         .imageUrl(imageUrl)
                         .review(savedReview)
