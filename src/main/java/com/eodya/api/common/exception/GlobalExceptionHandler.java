@@ -1,6 +1,7 @@
 package com.eodya.api.common.exception;
 
 import com.eodya.api.common.dto.ExceptionResponse;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -34,9 +35,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException(Exception e) {
-
         return ResponseEntity.status(COMMON_INTERNAL_SERVER_ERROR.getStatus())
                 .body(ExceptionResponse.from(COMMON_INTERNAL_SERVER_ERROR.getCode()));
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<ExceptionResponse> handleException(FeignException e) {
+        return ResponseEntity.status(COMMON_KAKAO_API_SERVER_ERROR.getStatus()) //todo
+                .body(ExceptionResponse.from(COMMON_KAKAO_API_SERVER_ERROR.getCode())); //todo
     }
 
     @ExceptionHandler(BusinessException.class)
