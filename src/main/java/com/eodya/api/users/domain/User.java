@@ -7,6 +7,8 @@ import com.eodya.api.review.domain.Review;
 import com.eodya.api.place.domain.Place;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +30,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLRestriction("bookmark_status = true and like_status = true")
+//todo - bookmark, recommend status = true
 public class User extends BaseEntity {
 
     @Id
@@ -44,9 +46,10 @@ public class User extends BaseEntity {
     @Column(name = "oauth_id")
     private String OAuthId;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "oauth_provider")
-    private String OAuthProvider;
+    private OAuthProvider OAuthProvider;
 
     @OneToMany(mappedBy = "user")
     private List<Place> places = new ArrayList<>();
@@ -64,7 +67,7 @@ public class User extends BaseEntity {
     private User(
             String nickname,
             String OAuthId,
-            String OAuthProvider
+            OAuthProvider OAuthProvider
     ) {
         this.nickname = nickname;
         this.OAuthId = OAuthId;
