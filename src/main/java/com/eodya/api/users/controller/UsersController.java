@@ -1,9 +1,11 @@
 package com.eodya.api.users.controller;
 
+import com.eodya.api.users.config.Login;
 import com.eodya.api.users.dto.request.UserLoginRequest;
 import com.eodya.api.users.dto.response.UserLoginResponse;
 import com.eodya.api.users.service.UserService;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,11 @@ public class UsersController {
     ) {
         UserLoginResponse response = userService.login(request.getToken());
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<Long> validate(@Login Long userId) {
+        return ResponseEntity.ok().body(userId);
     }
 
 }

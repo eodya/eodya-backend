@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
+import static com.eodya.api.users.exception.AuthExceptionCode.EXPIRED_TOKEN;
 import static com.eodya.api.users.exception.AuthExceptionCode.INVALID_TOKEN;
 
 
@@ -68,8 +69,10 @@ public class JwtTokenManager {
         try {
             getClaimsFromToken(token);
             return true;
-        } catch (SignatureException | ExpiredJwtException e) {
-            return false;
+        } catch (ExpiredJwtException e) {
+            throw new AuthException(EXPIRED_TOKEN);
+        } catch (SignatureException e) {
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.eodya.api.external.config;
+package com.eodya.api.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
