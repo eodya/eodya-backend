@@ -59,11 +59,6 @@ public class Review extends BaseEntity {
         this.user.getReviews().add(this);
     }
 
-    public void addImage(ReviewImage image) {
-        images.add(image);
-        image.setReview(this);
-    }
-
     @Builder
     private Review(
             LocalDate reviewDate,

@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eodya.api.place.dto.response.PlaceRakingResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/place")
@@ -29,5 +36,11 @@ public class PlaceController {
 
         return ResponseEntity.status(NO_CONTENT)
                 .build();
+    }
+
+    @GetMapping("/rankingbybookmarks")
+    public ResponseEntity<List<PlaceRakingResponse>> findPlaceRankingByBookmarks() {
+        return ResponseEntity.status(OK)
+                .body(placeService.findPlaceRankingByBookmarks());
     }
 }

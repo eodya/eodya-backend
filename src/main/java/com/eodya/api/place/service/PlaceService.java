@@ -14,13 +14,18 @@ import com.eodya.api.review.repository.ReviewImageRepository;
 import com.eodya.api.review.repository.ReviewRepository;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.users.repository.UserRepository;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.eodya.api.place.dto.response.PlaceRakingResponse;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +33,6 @@ public class PlaceService {
 
     private final S3Service s3Service;
     private final UserRepository userRepository;
-
     private final PlaceRepository placeRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final AddressDepth1Repository addressDepth1Repository;
@@ -57,9 +61,9 @@ public class PlaceService {
 
         for (String imageUrl : images) {
             ReviewImage reviewImage = ReviewImage.builder()
-                                        .imageUrl(imageUrl)
-                                        .review(review)
-                                        .build();
+                    .imageUrl(imageUrl)
+                    .review(review)
+                    .build();
             reviewImageRepository.save(reviewImage);
         }
     }
@@ -68,5 +72,19 @@ public class PlaceService {
     public Point pointBuild(double x, double y) {
         Coordinate coord = new Coordinate(x, y);
         return geometryFactory.createPoint(coord);
+    }
+
+    public List<PlaceRakingResponse> findPlaceRankingByBookmarks() {
+        AtomicLong rank = new AtomicLong(1);
+
+        return placeRepository.findAllByOrderByBookmarkCountDesc().stream()
+                .map(place -> PlaceRakingResponse.builder()
+                        .rank(rank.getAndIncrement())
+                        .placeImage(place.getImage())
+                        .bookmarkCount((long) place.getBookmarkCount())
+                        .addressDetail(place.getAddressDetail())
+                        .rank(rank.getAndIncrement())
+                        .build())
+                .toList();
     }
 }
