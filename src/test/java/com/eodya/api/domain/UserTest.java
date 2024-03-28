@@ -1,10 +1,12 @@
 package com.eodya.api.domain;
 
+import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.fixture.domain.UserFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.eodya.api.users.domain.OAuthProvider.KAKAO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -16,7 +18,7 @@ public class UserTest {
         //given
         String userName = "재훈";
         String OAuthId = "123456";
-        String OAuthProvider = "KAKAO";
+        OAuthProvider OAuthProvider = KAKAO;
         User user = UserFixture.userBuild(userName, OAuthId, OAuthProvider);
 
         //when & then
@@ -30,7 +32,7 @@ public class UserTest {
         //given
         String userName = "재훈";
         String OAuthId = "123456";
-        String OAuthProvider = "KAKAO";
+        OAuthProvider OAuthProvider = KAKAO;
         User user = UserFixture.userBuild(userName, OAuthId, OAuthProvider);
 
         //when & then
