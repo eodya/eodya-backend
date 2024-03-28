@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: dev
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${SPRING_CLOUD_AWS_CREDENTIALS_ACCESSKEY}
+      secretKey: ${SPRING_CLOUD_AWS_CREDENTIALS_SECRETKEY}
+    region:
+         static: ${SPRING_CLOUD_AWS_REGION_STATIC}
+    s3:
+      bucket: ${S3_BUCKET}
