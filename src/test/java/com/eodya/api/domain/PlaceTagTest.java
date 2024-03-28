@@ -4,6 +4,7 @@ import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceTag;
+import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.fixture.domain.AddressDepthFixture;
 import com.eodya.api.fixture.domain.PlaceFixture;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Point;
 
+import static com.eodya.api.users.domain.OAuthProvider.KAKAO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -28,7 +30,8 @@ public class PlaceTagTest {
         String placeName = "테스트 스팟 생성";
         String image = "이미지";
         String addressDetail = "서울시 동작구 머머머";
-        User user = UserFixture.userBuild("가희", "1234", "KAKAO");
+        OAuthProvider OAuthProvider = KAKAO;
+        User user = UserFixture.userBuild("가희", "1234", KAKAO);
         AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build("서울시");
         AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build("동작구", addressDepth1);
         Place place = PlaceFixture.placeBuild(point, placeName, image, addressDetail, user, addressDepth1, addressDepth2);
