@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,6 +35,7 @@ public class Review extends BaseEntity {
     private PlaceStatus placeStatus;
 
     @NotNull
+    @Column(length = 1000)
     private String reviewContent;
 
     private String image;
@@ -45,6 +48,9 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewImage> images = new ArrayList<>();
+
     public void setPlace(Place place) {
         this.place = place;
         this.place.getReviews().add(this);
@@ -53,6 +59,11 @@ public class Review extends BaseEntity {
     public void setUser(User user) {
         this.user = user;
         this.user.getReviews().add(this);
+    }
+
+    public void addImage(ReviewImage image) {
+        images.add(image);
+        image.setReview(this);
     }
 
     @Builder
