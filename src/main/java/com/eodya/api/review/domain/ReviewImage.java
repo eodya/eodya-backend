@@ -30,7 +30,7 @@ public class ReviewImage extends BaseEntity {
     @Builder
     public ReviewImage(String imageUrl, Review review) {
         this.imageUrl = imageUrl;
-        this.review = review;
+        setReview(review);
     }
 
     public void setReview(Review review) {

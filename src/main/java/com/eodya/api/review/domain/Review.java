@@ -38,8 +38,6 @@ public class Review extends BaseEntity {
     @Column(length = 1000)
     private String reviewContent;
 
-    private String image;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     private Place place;
@@ -70,7 +68,6 @@ public class Review extends BaseEntity {
     private Review(
             LocalDate reviewDate,
             PlaceStatus placeStatus,
-            String image,
             String reviewContent,
             Place place,
             User user
@@ -78,7 +75,6 @@ public class Review extends BaseEntity {
         this.reviewDate = reviewDate;
         this.placeStatus = placeStatus;
         this.reviewContent = reviewContent;
-        this.image = image;
         setPlace(place);
         setUser(user);
     }
