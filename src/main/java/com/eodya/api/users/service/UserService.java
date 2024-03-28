@@ -1,9 +1,12 @@
 package com.eodya.api.users.service;
 
+import static com.eodya.api.users.exception.UserExceptionCode.ALREADY_EXIST_NICKNAME;
+
 import com.eodya.api.users.config.JwtTokenManager;
 import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.users.dto.response.UserLoginResponse;
+import com.eodya.api.users.exception.UserException;
 import com.eodya.api.users.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,17 @@ public class UserService {
                .userId(user.getId())
                .nickname(user.getNickname())
                .build();
+    }
+
+    public void updateNickName(Long userId, String nickName) {
+        User user = userRepository.getUserById(userId);
+        userRepository.findByNickname(nickName)
+                .ifPresent(e -> {
+                    throw new UserException(ALREADY_EXIST_NICKNAME);
+                });
+
+        user.setUserNickName(nickName);
+        userRepository.save(user);
     }
 
 }
