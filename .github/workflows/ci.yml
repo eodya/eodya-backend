@@ -28,11 +28,13 @@ jobs:
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }} 
         run: |
           export SPRING_CLOUD_AWS_CREDENTIALS_ACCESSKEY=$AWS_ACCESS_KEY
           export SPRING_CLOUD_AWS_CREDENTIALS_SECRETKEY=$AWS_SECRET_KEY
           export SPRING_CLOUD_AWS_REGION_STATIC=$AWS_REGION
           export S3_BUCKET=$S3_BUCKET
+          export JWT_SECRET=$JWT_SECRET
           ./gradlew build sonar --info
           
       - name: Cache SonarCloud packages
