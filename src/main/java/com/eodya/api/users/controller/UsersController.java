@@ -28,9 +28,4 @@ public class UsersController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<Long> validate(@Login Long userId) {
-        return ResponseEntity.ok().body(userId);
-    }
-
 }
