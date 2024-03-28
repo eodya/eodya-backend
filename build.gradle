@@ -6,6 +6,33 @@ plugins {
     id "org.sonarqube" version "4.4.1.3373"
 }
 
+task copySubmodule(type: Copy) {
+    copy {
+        from './secret'
+        include "application.yml"
+        into 'src/main/resources'
+    }
+
+    copy {
+        from './secret/dev'
+        include "application-dev.yml"
+        into 'src/main/resources'
+    }
+
+    copy {
+        from './secret/prod'
+        include "application-prod.yml"
+        into 'src/main/resources'
+    }
+
+    copy {
+        from './secret/test'
+        include "application-test.yml"
+        into 'src/test/resources'
+        rename("application-test.yml", "application.yml")
+    }
+}
+
 ext {
     set('springCloudVersion', "2023.0.0")
 }
@@ -41,10 +68,10 @@ dependencies {
     testRuntimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    //Spring Cloud Config 설정
-    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+//    //Spring Cloud Config 설정
+//    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+//    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
     //flyway 설정
     implementation 'org.flywaydb:flyway-core'

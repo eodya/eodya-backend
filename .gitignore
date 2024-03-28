@@ -181,4 +181,10 @@ src/main/resources/bootstrap-dev.yaml
 src/main/resources/bootstrap-prod.yaml
 src/test/resources/bootstrap-test.yaml
 
+.idea
+deploy/
+.env
+secrt/
+src/main/resources/application-*.yaml
+
 # End of https://www.toptal.com/developers/gitignore/api/java,macos,intellij+all,gradle
