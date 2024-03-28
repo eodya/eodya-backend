@@ -11,6 +11,7 @@ import com.eodya.api.users.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class UserService {
     private final SocialService socialService;
     private final JwtTokenManager jwtTokenManager;
 
+    @Transactional
     public UserLoginResponse login(String token) {
        String oauthId = String.valueOf(socialService.getOAuthId(token));
        Optional<User> findUser = userRepository.findByOAuthId(oauthId);
@@ -42,6 +44,7 @@ public class UserService {
                .build();
     }
 
+    @Transactional
     public void updateNickName(Long userId, String nickName) {
         User user = userRepository.getUserById(userId);
         userRepository.findByNickname(nickName)
