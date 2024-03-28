@@ -7,8 +7,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import static com.eodya.api.review.exception.ReviewExceptionCode.*;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-
-    default Review getReviewById(Long reviewId) {
-        return findById(reviewId).orElseThrow(() -> new ReviewException(REVIEW_NOT_FOUND, reviewId));
-    }
 }
