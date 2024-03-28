@@ -10,5 +10,3 @@ public class UserException extends BusinessException {
     }
 }
 
-
-
