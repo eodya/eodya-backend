@@ -39,12 +39,6 @@ public class GlobalExceptionHandler {
                 .body(ExceptionResponse.from(COMMON_INTERNAL_SERVER_ERROR.getCode()));
     }
 
-    @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ExceptionResponse> handleException(FeignException e) {
-        return ResponseEntity.status(COMMON_KAKAO_API_SERVER_ERROR.getStatus()) //todo
-                .body(ExceptionResponse.from(COMMON_KAKAO_API_SERVER_ERROR.getCode())); //todo
-    }
-
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ExceptionResponse> handleBusinessException(BusinessException e) {
         ExceptionCode exceptionCode = e.getExceptionCode();

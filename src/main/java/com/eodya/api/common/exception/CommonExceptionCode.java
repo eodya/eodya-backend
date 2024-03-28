@@ -14,7 +14,6 @@ public enum CommonExceptionCode implements ExceptionCode {
     COMMON_BAD_REQUEST(BAD_REQUEST, "COM-002", "사용자 입력 유효성 검사 실패"),
     COMMON_METHOD_NOT_ALLOWED(METHOD_NOT_ALLOWED, "COM-003", "허용되지 않은 HTTP Method 요청 발생"),
     COMMON_INTERNAL_SERVER_ERROR(INTERNAL_SERVER_ERROR, "COM-004", "기타 서버 내부 에러 발생"),
-    COMMON_KAKAO_API_SERVER_ERROR(INTERNAL_SERVER_ERROR, "COM-005", "외부 서버 내부 에러 발생"),
     ;
 
     private final HttpStatus status;
