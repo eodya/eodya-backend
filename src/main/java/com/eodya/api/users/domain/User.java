@@ -73,4 +73,8 @@ public class User extends BaseEntity {
         this.OAuthId = OAuthId;
         this.OAuthProvider = OAuthProvider;
     }
+
+    public void setUserNickName(String nickname) {
+        this.nickname = nickname;
+    }
 }
