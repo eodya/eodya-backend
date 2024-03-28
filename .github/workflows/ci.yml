@@ -39,8 +39,3 @@ jobs:
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
         run: |
           ./gradlew build sonar --info \
-          -Dspring.cloud.aws.credentials.accessKey=$AWS_ACCESS_KEY
-          -Dspring.cloud.aws.credentials.secretKey=$AWS_SECRET_KEY
-          -Dspring.cloud.aws.region.static=$AWS_REGION
-          -Dcloud.aws.s3.bucket=$S3_BUCKET
-
