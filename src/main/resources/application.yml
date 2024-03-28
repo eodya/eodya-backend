@@ -8,6 +8,9 @@ cloud:
       accessKey: ${SPRING_CLOUD_AWS_CREDENTIALS_ACCESSKEY}
       secretKey: ${SPRING_CLOUD_AWS_CREDENTIALS_SECRETKEY}
     region:
-         static: ${SPRING_CLOUD_AWS_REGION_STATIC}
+      static: ${SPRING_CLOUD_AWS_REGION_STATIC}
     s3:
       bucket: ${S3_BUCKET}
+
+jwt:
+  secret: ${JWT_SECRET}

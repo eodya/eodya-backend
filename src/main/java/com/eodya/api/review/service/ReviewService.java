@@ -8,7 +8,9 @@ import com.eodya.api.place.repository.PlaceRepository;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.review.domain.ReviewImage;
 import com.eodya.api.review.dto.request.ReviewCreateRequest;
+import com.eodya.api.review.dto.response.ReviewDetail;
 import com.eodya.api.review.dto.response.ReviewIdResponse;
+import com.eodya.api.review.dto.response.ReviewProfileResponse;
 import com.eodya.api.review.repository.ReviewImageRepository;
 import com.eodya.api.review.repository.ReviewRepository;
 import com.eodya.api.users.domain.User;
@@ -17,10 +19,15 @@ import com.eodya.api.users.exception.UserExceptionCode;
 import com.eodya.api.users.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +64,30 @@ public class ReviewService {
             }
         }
         return ReviewIdResponse.from(review.getId());
+    }
+
+    public ReviewProfileResponse findReviewListByPlace(
+            Long placeId,
+            Long loggedInMemberId,
+            Pageable pageable
+    ) {
+        validateUserIsExist(loggedInMemberId);
+        validatePlaceIsExist(placeId);
+
+        Page<Review> reviewsPage = reviewRepository.findReviewsByPlace(placeId, pageable);
+        boolean hasNext = reviewsPage.hasNext();
+
+        List<ReviewDetail> reviewDetailsList = reviewsPage.getContent().stream()
+                .map(review -> ReviewDetail.builder()
+                        .userId(review.getUser().getId())
+                        .nickName(review.getUser().getNickname())
+                        .reviewDate(LocalDate.parse(DateTimeFormatter.ISO_LOCAL_DATE.format(review.getReviewDate())))
+                        .reviewImage(review.getImages().stream().map(ReviewImage::getImageUrl).collect(Collectors.toList()))
+                        .reviewContent(review.getReviewContent())
+                        .build())
+                .toList();
+
+        return ReviewProfileResponse.from(reviewsPage.getTotalElements(), reviewDetailsList, hasNext);
     }
 
     private void validateUserIsExist(Long userId) {
