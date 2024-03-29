@@ -11,5 +11,5 @@ import lombok.*;
 public class BookMarkChangeStatusRequest {
 
     @Schema(description = "생성(true) 또는 취소(false)")
-    private boolean status;
+    private boolean currentStatus;
 }

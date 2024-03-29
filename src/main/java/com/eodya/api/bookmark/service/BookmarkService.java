@@ -1,6 +1,7 @@
 package com.eodya.api.bookmark.service;
 
 import com.eodya.api.bookmark.domain.Bookmark;
+import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.bookmark.dto.request.BookMarkChangeStatusRequest;
 import com.eodya.api.bookmark.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,5 +18,8 @@ public class BookmarkService {
             BookMarkChangeStatusRequest changeStatusRequest
     ) {
         Bookmark bookMark = bookmarkRepository.getBookMarkById(placeId);
+        BookmarkStatus bookmarkStatus = changeStatusRequest.isStatus() ? BookmarkStatus.TRUE : BookmarkStatus.FALSE;
+        bookMark.updateStatus(bookmarkStatus);
+        bookmarkRepository.save(bookMark);
     }
 }
