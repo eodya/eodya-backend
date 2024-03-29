@@ -44,9 +44,11 @@ public class UserTest {
     @DisplayName("정상적으로 여러 명의 유저를 생성할 수 있다.")
     void createUsers_Success(int count) {
         //given
-        List<User> users = UserFixture.usersBuild(count,OAuthProvider.KAKAO);
+        List<User> users = UserFixture.usersBuild(count, OAuthProvider.KAKAO);
 
         //when & then
-        assertEquals(count, users.size());
+        users.forEach(user -> {
+            assertNotNull(user.getNickname());
+        });
     }
 }

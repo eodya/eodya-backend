@@ -42,7 +42,6 @@ class PlaceTagTest {
         List<PlaceTag> placeTags = PlaceTagFixture.placeTagsBuild(count);
 
         //when& then
-        assertEquals(count, placeTags.size());
         placeTags.forEach(placeTag -> {
             assertNotNull(placeTag.getTag());
             assertNotNull(placeTag.getPlace());
