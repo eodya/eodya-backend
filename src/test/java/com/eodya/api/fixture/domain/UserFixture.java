@@ -5,33 +5,26 @@ import com.eodya.api.users.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class UserFixture {
 
-    public static User userBuild(String nickname, String OAuthId, OAuthProvider OAuthProvider) {
+    public static User userBuild() {
         return User.builder()
-                .nickname(nickname)
-                .OAuthId(OAuthId)
-                .OAuthProvider(OAuthProvider)
+                .nickname("testNickName")
+                .OAuthId("testOAuthId")
+                .OAuthProvider(OAuthProvider.KAKAO)
                 .build();
     }
 
     public static List<User> usersBuild(int count, OAuthProvider OAuthProvider) {
-        List<User> users = new ArrayList<>();
-
-        IntStream.range(0, count).forEach(i -> {
-            String uniqueNickname = String.format("testUser%d", i);
-            String uniqueOAuthId = String.format("OAuthId%d", i);
-
-            users.add(
-                    User.builder()
-                            .nickname(uniqueNickname)
-                            .OAuthId(uniqueOAuthId)
-                            .OAuthProvider(OAuthProvider) // 모든 사용자에게 동일한 OAuthProvider 할당
-                            .build()
-            );
-        });
-        return users;
+        return IntStream.range(0, count)
+                .mapToObj(i -> User.builder()
+                        .nickname(String.format("testUser%d", i))
+                        .OAuthId(String.format("OAuthId%d", i))
+                        .OAuthProvider(OAuthProvider)
+                        .build())
+                .collect(Collectors.toList());
     }
 }
