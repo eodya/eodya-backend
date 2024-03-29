@@ -7,6 +7,7 @@ import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceTag;
 import com.eodya.api.place.domain.Tag;
 import com.eodya.api.place.dto.request.PlaceCreateRequest;
+import com.eodya.api.place.dto.response.PlaceAllByTagResponse;
 import com.eodya.api.place.exception.PlaceException;
 import com.eodya.api.place.repository.AddressDepth1Repository;
 import com.eodya.api.place.repository.AddressDepth2Repository;
@@ -23,6 +24,7 @@ import com.eodya.api.users.repository.UserRepository;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -115,6 +117,23 @@ public class PlaceService {
                     .build();
             reviewImageRepository.save(reviewImage);
         }
+    }
+
+    public List<PlaceAllByTagResponse> findAllPlaceByTag(String tagName) {
+        Tag tag = tagRepository.findByName(tagName)
+                .orElseThrow(() -> new PlaceException(INVALID_PLACE_IMAGE_COUNT));
+
+        List<PlaceTag> placeTags = placeTagRepository.findByTag(tag);
+        List<Long> placeIds = placeTags.stream()
+                .map(placeTag -> placeTag.getPlace())
+                .map(place -> place.getId())
+                .collect(Collectors.toList());
+
+         return placeRepository.findByPlaceIds(placeIds)
+                .stream().map(place -> PlaceAllByTagResponse.builder()
+                         .x(place.getPoint().getX())
+                         .y(place.getPoint().getY())
+                         .build()).toList();
     }
 
 
