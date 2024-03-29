@@ -34,10 +34,10 @@ public class BookmarkRepositoryTest {
     @DisplayName("정상적으로 생성된 Bookmark의 id를 가져올 수 있다.")
     void getBookmark_ById_Success() {
         //given
-        User testUser = UserFixture.userBuild();
-        Place testPlace = PlaceFixture.placeBuild();
-        userRepository.save(testUser);
-        placeRepository.save(testPlace);
+        User user = UserFixture.userBuild();
+        Place place = PlaceFixture.placeBuild(user);
+        userRepository.save(user);
+        placeRepository.save(place);
 
         Bookmark bookmark = BookmarkFixture.bookmarkBuilder();
         bookmarkRepository.save(bookmark);

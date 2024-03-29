@@ -5,6 +5,7 @@ import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceTag;
 import com.eodya.api.place.domain.Tag;
+import com.eodya.api.users.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.stream.IntStream;
 public class PlaceTagFixture {
 
     public static PlaceTag placeTagBuild() {
-        Place testPlace = PlaceFixture.placeBuild();
+        User testUser = UserFixture.userBuild();
+        Place testPlace = PlaceFixture.placeBuild(testUser);
 
         Tag testTag = Tag.builder()
                 .name("테스트 태그")

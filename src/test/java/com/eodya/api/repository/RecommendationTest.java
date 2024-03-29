@@ -35,7 +35,7 @@ class RecommendationTest {
     void getRecommendation_ById_Success() {
         //given
         User testUser = UserFixture.userBuild();
-        Place testPlace = PlaceFixture.placeBuild();
+        Place testPlace = PlaceFixture.placeBuild(testUser);
         userRepository.save(testUser);
         placeRepository.save(testPlace);
 

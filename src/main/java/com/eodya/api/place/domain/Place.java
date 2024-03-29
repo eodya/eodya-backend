@@ -15,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 import org.locationtech.jts.geom.*;
 
 @Getter
@@ -55,11 +56,11 @@ public class Place extends BaseEntity {
     @OneToMany(mappedBy = "place")
     private List<PlaceTag> placeTags = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_depth1_id")
     private AddressDepth1 depth1;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_depth2_id")
     private AddressDepth2 depth2;
 
@@ -80,6 +81,10 @@ public class Place extends BaseEntity {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getBookmarkCount() {
+        return bookmarkCount;
     }
 
     @Builder

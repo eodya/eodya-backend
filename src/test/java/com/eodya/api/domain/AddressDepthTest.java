@@ -27,7 +27,7 @@ class AddressDepthTest {
     void createAddressDepth2_Success() {
         //given
         AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build();
-        AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build();
+        AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build(null, addressDepth1);
 
         // when & then
         assertEquals("서울시", addressDepth1.getName());

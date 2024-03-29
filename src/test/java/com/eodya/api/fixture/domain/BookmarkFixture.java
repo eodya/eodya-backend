@@ -14,7 +14,7 @@ public class BookmarkFixture {
     public static Bookmark bookmarkBuilder() {
 
         User testuser = UserFixture.userBuild();
-        Place testPlace = PlaceFixture.placeBuild();
+        Place testPlace = PlaceFixture.placeBuild(testuser);
 
         return Bookmark.builder()
                 .user(testuser)

@@ -14,11 +14,11 @@ import java.util.stream.IntStream;
 public class ReviewFixture {
 
     public static Review reviewBuild() {
+        User user = UserFixture.userBuild();
         LocalDate reviewDate = LocalDate.now();
         PlaceStatus placeStatus = PlaceStatus.BLOOMING;
         String reviewContent = "테스트 리뷰 내용";
-        Place place = PlaceFixture.placeBuild();
-        User user = UserFixture.userBuild();
+        Place place = PlaceFixture.placeBuild(user);
 
         return Review.builder()
                 .reviewDate(reviewDate)

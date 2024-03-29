@@ -13,7 +13,7 @@ public class RecommendationFixture {
 
     public static Recommendation recommendationBuilder() {
         User testuser = UserFixture.userBuild();
-        Place testPlace = PlaceFixture.placeBuild();
+        Place testPlace = PlaceFixture.placeBuild(testuser);
 
         return Recommendation.builder()
                 .user(testuser)

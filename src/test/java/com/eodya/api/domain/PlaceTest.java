@@ -1,7 +1,9 @@
 package com.eodya.api.domain;
 
+import com.eodya.api.fixture.domain.UserFixture;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.fixture.domain.PlaceFixture;
+import com.eodya.api.users.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +20,8 @@ class PlaceTest {
     @DisplayName("정상적으로 장소를 생성할 수 있다.")
     void createPlace_Success() {
         // given
-        Place place = PlaceFixture.placeBuild();
+        User user = UserFixture.userBuild();
+        Place place = PlaceFixture.placeBuild(user);
 
 
         // when & then
