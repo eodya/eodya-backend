@@ -34,7 +34,6 @@ public class Place extends BaseEntity {
     @NotNull
     private String name;
 
-    @NotNull
     private String image;
 
     @NotNull
@@ -56,11 +55,11 @@ public class Place extends BaseEntity {
     @OneToMany(mappedBy = "place")
     private List<PlaceTag> placeTags = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_depth1_id")
     private AddressDepth1 depth1;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_depth2_id")
     private AddressDepth2 depth2;
 
@@ -69,11 +68,24 @@ public class Place extends BaseEntity {
         this.user.getPlaces().add(this);
     }
 
+    public void setDepth1(AddressDepth1 addressDepth1) {
+        this.depth1 = addressDepth1;
+        this.depth1.getPlace().add(this);
+    }
+
+    public void setDepth2(AddressDepth2 addressDepth2) {
+        this.depth2 = addressDepth2;
+        this.depth2.getPlace().add(this);
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Builder
     private Place(
             Point point,
             String name,
-            String image,
             String addressDetail,
             User user,
             AddressDepth1 addressDepth1,
@@ -81,12 +93,11 @@ public class Place extends BaseEntity {
     ) {
         this.point = point;
         this.name = name;
-        this.image = image;
         this.addressDetail = addressDetail;
         this.recommendCount = 0;
         this.bookmarkCount = 0;
-        this.depth1 = addressDepth1;
-        this.depth2 = addressDepth2;
+        setDepth1(addressDepth1);
+        setDepth2(addressDepth2);
         setUser(user);
     }
 }

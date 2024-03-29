@@ -17,21 +17,28 @@ public class PlaceTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    private String name;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     private Place place;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 
     public void setPlace(Place place) {
         this.place = place;
         this.place.getPlaceTags().add(this);
     }
 
-    @Builder
-    private PlaceTag(String name, Place place) {
-        this.name = name;
-        setPlace(place);
+    public void setTag(Tag tag) {
+        this.tag = tag;
+        this.tag.getPlaceTags().add(this);
     }
+
+    @Builder
+    private PlaceTag(Place place, Tag tag) {
+        setPlace(place);
+        setTag(tag);
+    }
+
 }
