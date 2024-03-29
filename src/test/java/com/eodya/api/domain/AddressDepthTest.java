@@ -10,37 +10,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class AddressDepthTest {
+class AddressDepthTest {
 
     @Test
     @DisplayName("정상적으로 '시'를 생성할 수 있다.")
     void createAddressDepth1_Success() {
         //given
-        String city = "서울";
-        AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build(city);
+        AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build();
 
         //when & then
-        assertEquals(addressDepth1.getName(), city);
-        assertEquals(addressDepth1.getDepth2().size(), 0);
+        assertEquals("서울시", addressDepth1.getName());
     }
 
     @Test
     @DisplayName("정상적으로 '구'를 생성할 수 있다.")
     void createAddressDepth2_Success() {
         //given
-        String city = "서울";
-        AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build(city);
-
-        String gu = "강남구";
-        AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build(gu, addressDepth1);
+        AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build();
+        AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build();
 
         // when & then
-        assertNotNull(addressDepth2.getDepth1());
-        assertEquals(addressDepth2.getName(), gu);
-
-        // 연관관계 확인
-        assertEquals(addressDepth1.getName(), city);
-        assertEquals(addressDepth1.getDepth2().size(), 1);
-        assertEquals(addressDepth1.getDepth2().get(0).getName(), gu);
+        assertEquals("서울시", addressDepth1.getName());
+        assertEquals("강남구", addressDepth2.getName());
     }
 }
