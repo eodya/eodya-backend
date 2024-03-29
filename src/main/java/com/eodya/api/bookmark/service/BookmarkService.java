@@ -18,7 +18,7 @@ public class BookmarkService {
             BookMarkChangeStatusRequest changeStatusRequest
     ) {
         Bookmark bookMark = bookmarkRepository.getBookMarkById(placeId);
-        BookmarkStatus bookmarkStatus = changeStatusRequest.isStatus() ? BookmarkStatus.TRUE : BookmarkStatus.FALSE;
+        BookmarkStatus bookmarkStatus = changeStatusRequest.isCurrentStatus() ? BookmarkStatus.TRUE : BookmarkStatus.FALSE;
         bookMark.updateStatus(bookmarkStatus);
         bookmarkRepository.save(bookMark);
     }
