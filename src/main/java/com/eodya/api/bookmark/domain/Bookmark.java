@@ -42,6 +42,10 @@ public class Bookmark extends BaseEntity {
         this.user.getBookmarks().add(this);
     }
 
+    public void updateStatus(BookmarkStatus status) {
+        this.status = status;
+    }
+
     @Builder
     private Bookmark(
             BookmarkStatus status,

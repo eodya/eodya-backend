@@ -15,6 +15,7 @@ import static com.eodya.api.place.exception.PlaceExceptionCode.*;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
+    @Query("SELECT p FROM Place p ORDER BY (SELECT COUNT(b.id) FROM Bookmark b WHERE b.place = p) DESC")
     List<Place> findAllByOrderByBookmarkCountDesc();
 
     default Place getPlaceById(Long placeId) {
@@ -29,5 +30,4 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     @Query("SELECT p FROM Place p WHERE p.addressDetail LIKE CONCAT('%', :address, '%')")
     Page<Place> findByAddressContaining(@Param("address") String address, Pageable pageable);
-
 }

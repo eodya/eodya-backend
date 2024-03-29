@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecommendationChangeStatusRequest {
 
-    private RecommendationStatus status;
+    private boolean currentStatus;
 }

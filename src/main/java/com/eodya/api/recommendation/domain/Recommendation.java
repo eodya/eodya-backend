@@ -44,6 +44,10 @@ public class Recommendation extends BaseEntity {
         this.user.getRecommendations().add(this);
     }
 
+    public void updateStatus(RecommendationStatus status) {
+        this.status = status;
+    }
+
     @Builder
     private Recommendation(
             RecommendationStatus status,
