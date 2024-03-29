@@ -3,6 +3,7 @@ package com.eodya.api.place.controller;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import com.eodya.api.place.dto.request.PlaceCreateRequest;
+import com.eodya.api.place.dto.response.PlaceAllByTagResponse;
 import com.eodya.api.place.service.PlaceService;
 import com.eodya.api.users.config.Login;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eodya.api.place.dto.response.PlaceRakingResponse;
@@ -33,7 +35,6 @@ public class PlaceController {
     public ResponseEntity<Void> createPlaceAndReview(@Login Long userId, @Valid @ModelAttribute PlaceCreateRequest request) {
 
         placeService.createPlaceAndReview(userId, request);
-
         return ResponseEntity.status(NO_CONTENT)
                 .build();
     }
@@ -42,5 +43,14 @@ public class PlaceController {
     public ResponseEntity<List<PlaceRakingResponse>> findPlaceRankingByBookmarks() {
         return ResponseEntity.status(OK)
                 .body(placeService.findPlaceRankingByBookmarks());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<PlaceAllByTagResponse>> findAllPlaceByTag(
+            @Login Long userId,
+            @RequestParam String tag
+    ) {
+        return ResponseEntity.status(OK)
+                .body(placeService.findAllPlaceByTag(tag));
     }
 }

@@ -26,4 +26,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     @Query("select p from Place p join fetch p.placeTags where p.addressDetail = :addressDetail")
     Optional<Place> findByAddressDetail(@Param("addressDetail") String addressDetail);
 
+    @Query("select p from Place p where p.id in :ids")
+    List<Place> findByPlaceIds(@Param("ids") List<Long> placeIds);
+
 }
