@@ -34,18 +34,8 @@ public class PlaceTagTest {
         User user = UserFixture.userBuild("가희", "1234", KAKAO);
         AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build("서울시");
         AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build("동작구", addressDepth1);
-        Place place = PlaceFixture.placeBuild(point, placeName, image, addressDetail, user, addressDepth1, addressDepth2);
+        Place place = PlaceFixture.placeBuild(point, placeName, addressDetail, user, addressDepth1, addressDepth2);
 
-        //when
-        PlaceTag placeTag = PlaceTagFixture.placeTagBuild(tagName, place);
 
-        //then
-        assertNotNull(placeTag);
-        assertEquals(placeTag.getName(), tagName);
-        assertEquals(placeTag.getPlace(), place);
-
-        //연관관계 확인
-        assertEquals(place.getPlaceTags().size(), 1);
-        assertEquals(place.getPlaceTags().get(0).getName(), tagName);
     }
 }

@@ -4,6 +4,8 @@ import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;
+import com.eodya.api.place.domain.PlaceTag;
+import com.eodya.api.place.domain.Tag;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.users.domain.User;
 import jakarta.validation.constraints.NotBlank;
@@ -40,6 +42,9 @@ public class PlaceCreateRequest {
     PlaceStatus placeStatus;
 
     @NotBlank
+    String tag;
+
+    @NotBlank
     String reviewDate;
 
     @NotBlank
@@ -55,7 +60,6 @@ public class PlaceCreateRequest {
     double y;
 
     public Place toPlaceEntity(Point point,
-                          String image,
                           User user,
                           AddressDepth1 addressDepth1,
                           AddressDepth2 addressDepth2) {
@@ -63,11 +67,16 @@ public class PlaceCreateRequest {
         return Place.builder()
                 .point(point)
                 .name(name)
-                .image(image)
                 .addressDetail(addressDetail)
                 .user(user)
                 .addressDepth1(addressDepth1)
                 .addressDepth2(addressDepth2)
+                .build();
+    }
+
+    public Tag toTagEntity(String tag) {
+        return Tag.builder()
+                .name(tag)
                 .build();
     }
 
