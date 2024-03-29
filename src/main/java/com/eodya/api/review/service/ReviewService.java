@@ -52,7 +52,7 @@ public class ReviewService {
         Review savedReview = reviewRepository.save(review);
 
         if (images != null && !images.isEmpty()) {
-            List<String> imageUrls = s3Service.uploadFiles(images); // 여러 파일을 한 번에 업로드하고 URL 리스트를 받음
+            List<String> imageUrls = s3Service.uploadFiles(images);
 
             for (String imageUrl : imageUrls) {
                 ReviewImage reviewImage = ReviewImage.builder()
@@ -74,7 +74,9 @@ public class ReviewService {
         validateUserIsExist(loggedInMemberId);
         validatePlaceIsExist(placeId);
 
-        Page<Review> reviewsPage = reviewRepository.findReviewsByPlace(placeId, pageable);
+        Place place = placeRepository.getPlaceById(placeId);
+
+        Page<Review> reviewsPage = reviewRepository.findReviewsByPlace(place, pageable);
         boolean hasNext = reviewsPage.hasNext();
 
         List<ReviewDetail> reviewDetailsList = reviewsPage.getContent().stream()

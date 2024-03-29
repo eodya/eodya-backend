@@ -46,7 +46,7 @@ public class Place extends BaseEntity {
     @NotNull
     private int bookmarkCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
