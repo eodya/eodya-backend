@@ -38,18 +38,12 @@ public class BookmarkRepositoryTest {
     @DisplayName("정상적으로 생성된 Bookmark의 id를 가져올 수 있다.")
     void getBookmark_ById_Success() {
         //given
-        User testUser = UserFixture.userBuild("test", "testOAuthId", OAuthProvider.KAKAO);
+        User testUser = UserFixture.userBuild();
+        Place testPlace = PlaceFixture.placeBuild();
         userRepository.save(testUser);
-
-        Point testPoint = PlaceFixture.pointBuild(37.5, 37.5);
-
-        AddressDepth1 testAddressDepth1 = AddressDepth1.builder().name("testCity").build();
-        AddressDepth2 testAddressDepth2 = AddressDepth2.builder().name("testGu").addressDepth1(testAddressDepth1).build();
-
-        Place testPlace = PlaceFixture.placeBuild(testPoint, "testPlace", "testAddressDetail", testUser, testAddressDepth1, testAddressDepth2);
         placeRepository.save(testPlace);
 
-        Bookmark bookmark = BookmarkFixture.bookmarkBuilder(testUser, testPlace, BookmarkStatus.TRUE);
+        Bookmark bookmark = BookmarkFixture.bookmarkBuilder();
         bookmarkRepository.save(bookmark);
 
         //when
