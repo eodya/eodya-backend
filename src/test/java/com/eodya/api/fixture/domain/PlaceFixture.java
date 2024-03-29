@@ -14,7 +14,6 @@ public class PlaceFixture {
     public static Place placeBuild(
             Point point,
             String name,
-            String image,
             String addressDetail,
             User user,
             AddressDepth1 addressDepth1,
@@ -23,7 +22,6 @@ public class PlaceFixture {
         return Place.builder()
                 .point(point)
                 .name(name)
-                .image(image)
                 .addressDetail(addressDetail)
                 .user(user)
                 .addressDepth1(addressDepth1)

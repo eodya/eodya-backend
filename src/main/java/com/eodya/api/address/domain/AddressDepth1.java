@@ -1,6 +1,7 @@
 package com.eodya.api.address.domain;
 
 import com.eodya.api.common.entity.BaseEntity;
+import com.eodya.api.place.domain.Place;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -25,6 +26,9 @@ public class AddressDepth1 extends BaseEntity {
 
     @NotNull
     private String name;
+
+    @OneToMany(mappedBy = "depth1")
+    private List<Place> place = new ArrayList<>();
 
     @OneToMany(mappedBy = "depth1")
     private List<AddressDepth2> depth2 = new ArrayList<>();
