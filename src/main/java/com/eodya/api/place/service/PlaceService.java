@@ -2,12 +2,17 @@ package com.eodya.api.place.service;
 
 import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
+import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.common.service.S3Service;
 import com.eodya.api.place.domain.Place;
+import com.eodya.api.place.domain.PlaceStatus;
 import com.eodya.api.place.domain.PlaceTag;
 import com.eodya.api.place.domain.Tag;
+import com.eodya.api.place.dto.request.PlaceAllByAddressRequest;
 import com.eodya.api.place.dto.request.PlaceCreateRequest;
+import com.eodya.api.place.dto.response.PlaceAllByAddressResponse;
 import com.eodya.api.place.dto.response.PlaceAllByTagResponse;
+import com.eodya.api.place.dto.response.PlaceDetail;
 import com.eodya.api.place.exception.PlaceException;
 import com.eodya.api.place.repository.AddressDepth1Repository;
 import com.eodya.api.place.repository.AddressDepth2Repository;
@@ -21,6 +26,10 @@ import com.eodya.api.review.repository.ReviewRepository;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.users.repository.UserRepository;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import java.util.Optional;
@@ -29,6 +38,7 @@ import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.eodya.api.place.dto.response.PlaceRakingResponse;
@@ -154,6 +164,35 @@ public class PlaceService {
                         .rank(rank.getAndIncrement())
                         .build())
                 .toList();
+    }
+
+    public PlaceAllByAddressResponse findAllPlaceByAddress(Long userId, PlaceAllByAddressRequest request, Pageable pageable) {
+        User user = userRepository.getUserById(userId);
+
+        Map<Long, Integer> bookMarkPlaceId = new HashMap<>();
+        user.getBookmarks().stream()
+                .filter(bookmark -> bookmark.getStatus().equals(BookmarkStatus.TRUE))
+                .forEach(bookmark -> bookMarkPlaceId.put(bookmark.getPlace().getId(), 1));
+
+        Page<Place> places = placeRepository.findByAddressContaining(request.getAddress(), pageable);
+        boolean hasNext = places.hasNext();
+
+        List<PlaceDetail> details = places.getContent().stream()
+                .map((place)-> {
+                    boolean isBookmarked = false;
+                    if(bookMarkPlaceId.getOrDefault(place.getId(), 0) == 1) {
+                        System.out.println(place.getId());
+                        isBookmarked = true;
+                    }
+                    PlaceStatus placeStatus = place.getReviews().stream() //가장 최신의 리뷰를 가져옴
+                            .sorted(Comparator.comparing(Review::getReviewDate).reversed())
+                            .findFirst()
+                            .get()
+                            .getPlaceStatus();
+
+                    return PlaceDetail.from(place, isBookmarked, placeStatus);
+                }).toList();
+        return PlaceAllByAddressResponse.from(details, hasNext);
     }
 
     public void validatePlaceImageCount(List<MultipartFile> files) {
