@@ -35,7 +35,7 @@ class BookmarkTest {
         AddressDepth2 testAddressDepth2 = AddressDepth2.builder().name("testGu").addressDepth1(testAddressDepth1).build();
 
         Place testPlace = PlaceFixture.placeBuild(testPoint, "testPlace", "testAddressDetail", testuser, testAddressDepth1, testAddressDepth2);
-        Bookmark bookmark = BookmarkFixture.bookmarBuilder(testuser, testPlace, BookmarkStatus.TRUE);
+        Bookmark bookmark = BookmarkFixture.bookmarkBuilder(testuser, testPlace, BookmarkStatus.TRUE);
 
         //when & then
         assertNotNull(bookmark.getUser());
@@ -59,7 +59,7 @@ class BookmarkTest {
 
         List<Bookmark> bookmarks = new ArrayList<>();
         for (User user : users) {
-            bookmarks.add(BookmarkFixture.bookmarBuilder(user, testPlace, BookmarkStatus.TRUE));
+            bookmarks.add(BookmarkFixture.bookmarkBuilder(user, testPlace, BookmarkStatus.TRUE));
         }
 
         //when & then
@@ -81,7 +81,7 @@ class BookmarkTest {
         AddressDepth2 testAddressDepth2 = AddressDepth2.builder().name("testGu").addressDepth1(testAddressDepth1).build();
 
         Place testPlace = PlaceFixture.placeBuild(testPoint, "testPlace", "testAddressDetail", testuser, testAddressDepth1, testAddressDepth2);
-        Bookmark bookmark = BookmarkFixture.bookmarBuilder(testuser, testPlace, BookmarkStatus.FALSE);
+        Bookmark bookmark = BookmarkFixture.bookmarkBuilder(testuser, testPlace, BookmarkStatus.FALSE);
 
         //when & then
         assertNotNull(bookmark.getUser());
@@ -105,7 +105,7 @@ class BookmarkTest {
 
         List<Bookmark> bookmarks = new ArrayList<>();
         for (User user : users) {
-            bookmarks.add(BookmarkFixture.bookmarBuilder(user, testPlace, BookmarkStatus.FALSE));
+            bookmarks.add(BookmarkFixture.bookmarkBuilder(user, testPlace, BookmarkStatus.FALSE));
         }
 
         //when & then

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BookmarkFixture {
 
-    public static Bookmark bookmarBuilder(
+    public static Bookmark bookmarkBuilder(
             User user,
             Place place,
             BookmarkStatus status
@@ -22,7 +22,7 @@ public class BookmarkFixture {
                 .build();
     }
 
-    public static List<Bookmark> bookmarkBuilder(
+    public static List<Bookmark> bookmarksBuilder(
             List<User> users,
             Place place,
             BookmarkStatus status
