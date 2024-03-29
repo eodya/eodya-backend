@@ -1,7 +1,5 @@
 package com.eodya.api.repository;
 
-import com.eodya.api.address.domain.AddressDepth1;
-import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.bookmark.repository.BookmarkRepository;
@@ -10,12 +8,10 @@ import com.eodya.api.fixture.domain.PlaceFixture;
 import com.eodya.api.fixture.domain.UserFixture;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.repository.PlaceRepository;
-import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.users.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
