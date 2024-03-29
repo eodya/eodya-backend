@@ -12,30 +12,40 @@ import com.eodya.api.fixture.domain.PlaceTagFixture;
 import com.eodya.api.fixture.domain.UserFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.locationtech.jts.geom.Point;
+
+import java.util.List;
 
 import static com.eodya.api.users.domain.OAuthProvider.KAKAO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
-public class PlaceTagTest {
+class PlaceTagTest {
 
     @Test
     @DisplayName("정상적으로 장소 태그를 생성할 수 있다.")
     void createPlaceTag_Success() {
+        // given
+        PlaceTag placeTag = PlaceTagFixture.placeTagBuild();
+
+        // when & then
+        assertNotNull(placeTag.getTag());
+        assertNotNull(placeTag.getPlace());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5})
+    void createPlaceTags_Success(int count) {
         //given
-        String tagName = "테스트";
-        Point point = PlaceFixture.pointBuild(10.0, 11.0);
-        String placeName = "테스트 스팟 생성";
-        String image = "이미지";
-        String addressDetail = "서울시 동작구 머머머";
-        OAuthProvider OAuthProvider = KAKAO;
-        User user = UserFixture.userBuild("가희", "1234", KAKAO);
-        AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build("서울시");
-        AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build("동작구", addressDepth1);
-        Place place = PlaceFixture.placeBuild(point, placeName, addressDetail, user, addressDepth1, addressDepth2);
+        List<PlaceTag> placeTags = PlaceTagFixture.placeTagsBuild(count);
 
-
+        //when& then
+        assertEquals(count, placeTags.size());
+        placeTags.forEach(placeTag -> {
+            assertNotNull(placeTag.getTag());
+            assertNotNull(placeTag.getPlace());
+        });
     }
 }
