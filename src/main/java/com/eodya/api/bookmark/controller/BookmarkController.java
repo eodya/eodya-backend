@@ -1,6 +1,6 @@
 package com.eodya.api.bookmark.controller;
 
-import com.eodya.api.bookmark.dto.request.BookMarkChangeStatusRequest;
+import com.eodya.api.bookmark.dto.request.BookmarkChangeStatusRequest;
 import com.eodya.api.bookmark.service.BookmarkService;
 import com.eodya.api.users.config.Login;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +30,7 @@ public class BookmarkController {
     public ResponseEntity<Void> updateBookmarkStatus(
             @Login Long loggedInMemberId,
             @PathVariable Long placeId,
-            @Valid @RequestBody BookMarkChangeStatusRequest changeStatusRequest
+            @Valid @RequestBody BookmarkChangeStatusRequest changeStatusRequest
 
     ) {
         bookmarkService.updateBookmarkStatus(
