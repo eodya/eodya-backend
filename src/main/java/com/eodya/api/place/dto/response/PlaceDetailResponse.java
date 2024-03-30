@@ -13,23 +13,24 @@ import lombok.Getter;
 public class PlaceDetailResponse {
 
     private String name;
-    private String addressDetail;
     private String image;
-    private PlaceStatus placeStatus;
     private long bookmarkCount;
+    private String addressDetail;
+    private PlaceStatus placeStatus;
     private boolean bookmarkStatus;
 
     public static PlaceDetailResponse from(
             Place place,
             PlaceStatus placeStatus,
-            boolean bookmarkStatus
+            boolean bookmarkStatus,
+            long bookmarkCount
     ) {
         return PlaceDetailResponse.builder()
                 .name(place.getName())
                 .addressDetail(place.getAddressDetail())
                 .image(place.getImage())
                 .placeStatus(placeStatus)
-                .bookmarkCount(place.getBookmarkCount())
+                .bookmarkCount(bookmarkCount)
                 .bookmarkStatus(bookmarkStatus)
                 .build();
     }
