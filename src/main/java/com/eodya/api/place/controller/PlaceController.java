@@ -6,6 +6,7 @@ import com.eodya.api.place.dto.request.PlaceAllByAddressRequest;
 import com.eodya.api.place.dto.request.PlaceCreateRequest;
 import com.eodya.api.place.dto.response.PlaceAllByAddressResponse;
 import com.eodya.api.place.dto.response.PlaceAllByTagResponse;
+import com.eodya.api.place.dto.response.PlaceDetailResponse;
 import com.eodya.api.place.service.PlaceService;
 import com.eodya.api.users.config.Login;
 import jakarta.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,5 +69,14 @@ public class PlaceController {
             @PageableDefault(sort = "bookmarkCount", direction = Direction.DESC) Pageable pageable) {
         return ResponseEntity.status(OK)
                 .body(placeService.findAllPlaceByAddress(userId, request, pageable));
+    }
+
+    @GetMapping("/detail/{placeId}")
+    public ResponseEntity<PlaceDetailResponse> getPlaceDetail(
+            @Login Long userId,
+            @PathVariable Long placeId
+    ) {
+        return ResponseEntity.status(OK)
+                .body(placeService.getPlaceDetail(placeId));
     }
 }
