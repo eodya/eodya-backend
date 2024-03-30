@@ -63,7 +63,7 @@ public class PlaceController {
                 .body(placeService.findAllPlaceByTag(tag));
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<PlaceAllByAddressResponse> findAllPlaceByAddress(
             @Login Long userId, @RequestBody PlaceAllByAddressRequest request,
             @PageableDefault(sort = "bookmarkCount", direction = Direction.DESC) Pageable pageable) {
