@@ -51,7 +51,7 @@ public class UsersController {
         return ResponseEntity.ok().body(userService.getMyInfo(userId));
     }
 
-        @GetMapping("/my/bookmarks")
+    @GetMapping("/my/bookmarks")
     public ResponseEntity<UserMyBookmarkResponse> getMyBookmarks(
             @Login Long userId,
             @PageableDefault(sort = "updatedAt", direction = Direction.DESC) Pageable pageable) {
