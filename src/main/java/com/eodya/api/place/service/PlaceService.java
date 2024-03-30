@@ -13,6 +13,7 @@ import com.eodya.api.place.dto.request.PlaceCreateRequest;
 import com.eodya.api.place.dto.response.PlaceAllByAddressResponse;
 import com.eodya.api.place.dto.response.PlaceAllByTagResponse;
 import com.eodya.api.place.dto.response.PlaceDetail;
+import com.eodya.api.place.dto.response.PlaceDetailResponse;
 import com.eodya.api.place.exception.PlaceException;
 import com.eodya.api.place.repository.AddressDepth1Repository;
 import com.eodya.api.place.repository.AddressDepth2Repository;
@@ -180,16 +181,13 @@ public class PlaceService {
 
         List<PlaceDetail> details = places.getContent().stream()
                 .map((place)-> {
+
                     boolean isBookmarked = false;
                     if(bookMarkPlaceId.getOrDefault(place.getId(), 0) == 1) {
                         System.out.println(place.getId());
                         isBookmarked = true;
                     }
-                    PlaceStatus placeStatus = place.getReviews().stream() //가장 최신의 리뷰를 가져옴
-                            .sorted(Comparator.comparing(Review::getReviewDate).reversed())
-                            .findFirst()
-                            .get()
-                            .getPlaceStatus();
+                    PlaceStatus placeStatus = getPlaceRecentReview(place);
 
                     return PlaceDetail.from(place, isBookmarked, placeStatus);
                 }).toList();
@@ -202,4 +200,18 @@ public class PlaceService {
         }
     }
 
+    public PlaceDetailResponse getPlaceDetail(Long placeId) {
+        Place place = placeRepository.getPlaceById(placeId);
+        PlaceStatus placeStatus = getPlaceRecentReview(place);
+
+        return PlaceDetailResponse.from(place, placeStatus);
+    }
+
+    private PlaceStatus getPlaceRecentReview(Place place) {
+        return place.getReviews().stream() //가장 최신의 리뷰를 가져옴
+                .sorted(Comparator.comparing(Review::getReviewDate).reversed())
+                .findFirst()
+                .get()
+                .getPlaceStatus();
+    }
 }
