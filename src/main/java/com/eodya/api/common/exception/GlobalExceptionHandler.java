@@ -33,11 +33,11 @@ public class GlobalExceptionHandler {
                 .body(ExceptionResponse.from(COMMON_METHOD_NOT_ALLOWED.getCode()));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception e) {
-        return ResponseEntity.status(COMMON_INTERNAL_SERVER_ERROR.getStatus())
-                .body(ExceptionResponse.from(COMMON_INTERNAL_SERVER_ERROR.getCode()));
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ExceptionResponse> handleException(Exception e) {
+//        return ResponseEntity.status(COMMON_INTERNAL_SERVER_ERROR.getStatus())
+//                .body(ExceptionResponse.from(COMMON_INTERNAL_SERVER_ERROR.getCode()));
+//    }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ExceptionResponse> handleBusinessException(BusinessException e) {
