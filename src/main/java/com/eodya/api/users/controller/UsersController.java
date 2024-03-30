@@ -8,6 +8,7 @@ import com.eodya.api.users.dto.request.UserLoginRequest;
 import com.eodya.api.users.dto.response.UserInfoResponse;
 import com.eodya.api.users.dto.response.UserLoginResponse;
 import com.eodya.api.users.dto.response.UserMyBookmarkResponse;
+import com.eodya.api.users.dto.response.UserMyReviewsResponse;
 import com.eodya.api.users.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -57,5 +58,13 @@ public class UsersController {
             @PageableDefault(sort = "updatedAt", direction = Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok()
                 .body(userService.getMyBookmarks(userId, pageable));
+    }
+
+    @GetMapping("/my/reviews")
+    public ResponseEntity<UserMyReviewsResponse> getMyReviews(
+            @Login Long userId,
+            @PageableDefault(sort = "updatedAt", direction = Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok()
+                .body(userService.getMyReviews(userId, pageable));
     }
 }

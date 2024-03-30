@@ -8,6 +8,7 @@ import com.eodya.api.bookmark.repository.BookmarkRepository;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;
 import com.eodya.api.review.domain.Review;
+import com.eodya.api.review.repository.ReviewRepository;
 import com.eodya.api.users.config.JwtTokenManager;
 import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
@@ -15,6 +16,8 @@ import com.eodya.api.users.dto.response.UserBookmarkDetail;
 import com.eodya.api.users.dto.response.UserInfoResponse;
 import com.eodya.api.users.dto.response.UserLoginResponse;
 import com.eodya.api.users.dto.response.UserMyBookmarkResponse;
+import com.eodya.api.users.dto.response.UserMyReviewsResponse;
+import com.eodya.api.users.dto.response.UserReviewDetail;
 import com.eodya.api.users.exception.UserException;
 import com.eodya.api.users.repository.UserRepository;
 
@@ -35,6 +38,7 @@ public class UserService {
     private final SocialService socialService;
     private final JwtTokenManager jwtTokenManager;
     private final BookmarkRepository bookmarkRepository;
+    private final ReviewRepository reviewRepository;
 
     @Transactional
     public UserLoginResponse login(String token) {
@@ -77,7 +81,6 @@ public class UserService {
     }
 
     public UserMyBookmarkResponse getMyBookmarks(Long userId, Pageable pageable) {
-
         Page<Bookmark> bookmarks = bookmarkRepository.findByUserIdAndStatus(userId, BookmarkStatus.TRUE, pageable);
         boolean hasNext = bookmarks.hasNext();
 
@@ -96,5 +99,25 @@ public class UserService {
                     return UserBookmarkDetail.from(place, placeStatus);
                 }).toList();
         return UserMyBookmarkResponse.from(bookmarks.getTotalElements(), details, hasNext);
+    }
+
+    public UserMyReviewsResponse getMyReviews(Long userId, Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findByUserId(userId, pageable);
+        boolean hasNext = reviews.hasNext();
+
+        List<UserReviewDetail> userReviews = reviews.getContent().stream()
+                .map((review -> {
+                    Place place = review.getPlace();
+
+                    PlaceStatus placeStatus = place.getReviews().stream() //가장 최신의 리뷰를 가져옴
+                            .sorted(Comparator.comparing(Review::getReviewDate).reversed())
+                            .findFirst()
+                            .get()
+                            .getPlaceStatus();
+
+                    return UserReviewDetail.from(review.getPlace(), review, placeStatus);
+                })).toList();
+
+        return UserMyReviewsResponse.from(reviews.getTotalElements(), userReviews,hasNext);
     }
 }
