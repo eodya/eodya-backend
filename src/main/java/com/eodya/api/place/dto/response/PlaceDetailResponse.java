@@ -17,14 +17,20 @@ public class PlaceDetailResponse {
     private String image;
     private PlaceStatus placeStatus;
     private long bookmarkCount;
+    private boolean bookmarkStatus;
 
-    public static PlaceDetailResponse from(Place place, PlaceStatus placeStatus) {
+    public static PlaceDetailResponse from(
+            Place place,
+            PlaceStatus placeStatus,
+            boolean bookmarkStatus
+    ) {
         return PlaceDetailResponse.builder()
                 .name(place.getName())
                 .addressDetail(place.getAddressDetail())
                 .image(place.getImage())
                 .placeStatus(placeStatus)
                 .bookmarkCount(place.getBookmarkCount())
+                .bookmarkStatus(bookmarkStatus)
                 .build();
     }
 }

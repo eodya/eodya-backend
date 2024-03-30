@@ -77,6 +77,6 @@ public class PlaceController {
             @PathVariable Long placeId
     ) {
         return ResponseEntity.status(OK)
-                .body(placeService.getPlaceDetail(placeId));
+                .body(placeService.getPlaceDetail(userId, placeId));
     }
 }
