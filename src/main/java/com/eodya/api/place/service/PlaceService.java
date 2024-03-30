@@ -32,11 +32,14 @@ import com.eodya.api.users.repository.UserRepository;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -47,6 +50,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eodya.api.place.dto.response.PlaceRakingResponse;
 
 import java.util.concurrent.atomic.AtomicLong;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.eodya.api.place.exception.PlaceExceptionCode.ALREADY_EXIST_PLACE;
@@ -85,12 +89,11 @@ public class PlaceService {
         Place place;
         Optional<Place> findPlace = placeRepository.findByAddressDetail(request.getAddressDetail());
 
-        if(findPlace.isPresent()){
+        if (findPlace.isPresent()) {
             Optional<PlaceTag> placeTag = placeTagRepository.findByPlaceAndTag(findPlace.get(), tag);
-            if(placeTag.isPresent()) throw new PlaceException(ALREADY_EXIST_PLACE);
+            if (placeTag.isPresent()) throw new PlaceException(ALREADY_EXIST_PLACE);
             place = findPlace.get();
-        }
-        else{
+        } else {
             //이미 등록된 장소가 아니면 등록
             Optional<AddressDepth1> depth1 = addressDepth1Repository.findByName(request.getAddressDepth1());
 
@@ -143,12 +146,12 @@ public class PlaceService {
                 .map(place -> place.getId())
                 .collect(Collectors.toList());
 
-         return placeRepository.findByPlaceIds(placeIds)
+        return placeRepository.findByPlaceIds(placeIds)
                 .stream().map(place -> PlaceAllByTagResponse.builder()
-                         .placeId(place.getId())
-                         .x(place.getPoint().getX())
-                         .y(place.getPoint().getY())
-                         .build()).toList();
+                        .placeId(place.getId())
+                        .x(place.getPoint().getX())
+                        .y(place.getPoint().getY())
+                        .build()).toList();
     }
 
 
@@ -166,7 +169,6 @@ public class PlaceService {
                         .placeImage(place.getImage())
                         .bookmarkCount((long) place.getBookmarkCount())
                         .addressDetail(place.getAddressDetail())
-                        .rank(rank.getAndIncrement())
                         .build())
                 .toList();
     }
@@ -183,10 +185,10 @@ public class PlaceService {
         boolean hasNext = places.hasNext();
 
         List<PlaceDetail> details = places.getContent().stream()
-                .map((place)-> {
+                .map((place) -> {
 
                     boolean isBookmarked = false;
-                    if(bookMarkPlaceId.getOrDefault(place.getId(), 0) == 1) {
+                    if (bookMarkPlaceId.getOrDefault(place.getId(), 0) == 1) {
                         System.out.println(place.getId());
                         isBookmarked = true;
                     }
@@ -198,7 +200,7 @@ public class PlaceService {
     }
 
     public void validatePlaceImageCount(List<MultipartFile> files) {
-        if(files.size() > MAX_PLACE_IMAGE_COUNT || files.size()==0) {
+        if (files.size() > MAX_PLACE_IMAGE_COUNT || files.size() == 0) {
             throw new PlaceException(INVALID_PLACE_IMAGE_COUNT);
         }
     }
@@ -206,14 +208,15 @@ public class PlaceService {
     public PlaceDetailResponse getPlaceDetail(Long userId, Long placeId) {
         Place place = placeRepository.getPlaceById(placeId);
         PlaceStatus placeStatus = getPlaceRecentReview(place);
+        Long bookmarkCount = placeRepository.countBookmarksByPlace(place);
 
         boolean bookmarkStatus = false;
         Optional<Bookmark> findBookmark = bookmarkRepository.findByUserIdAndPlaceId(userId, place.getId());
 
-        if(findBookmark.isPresent() && findBookmark.get().getStatus().equals(BookmarkStatus.TRUE)){
+        if (findBookmark.isPresent() && findBookmark.get().getStatus().equals(BookmarkStatus.TRUE)) {
             bookmarkStatus = true;
         }
-        return PlaceDetailResponse.from(place, placeStatus, bookmarkStatus);
+        return PlaceDetailResponse.from(place, placeStatus, bookmarkStatus, bookmarkCount);
     }
 
     private PlaceStatus getPlaceRecentReview(Place place) {
