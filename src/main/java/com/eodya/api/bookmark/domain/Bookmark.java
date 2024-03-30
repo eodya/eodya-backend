@@ -42,18 +42,23 @@ public class Bookmark extends BaseEntity {
         this.user.getBookmarks().add(this);
     }
 
+    public void setPlace(Place place) {
+        this.place = place;
+        this.place.getBookmarks().add(this);
+    }
+
+
     public void updateStatus(BookmarkStatus status) {
         this.status = status;
     }
 
     @Builder
     private Bookmark(
-            BookmarkStatus status,
             User user,
             Place place
     ) {
-        this.status = status;
-        this.place = place;
+        this.status = TRUE;
+        setPlace(place);
         setUser(user);
     }
 }

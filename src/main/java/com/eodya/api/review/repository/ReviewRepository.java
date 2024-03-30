@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findReviewsByPlace(Place place, Pageable pageable);
+
+    Page<Review> findByUserId(Long userId, Pageable pageable);
 }
