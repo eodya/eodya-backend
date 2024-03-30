@@ -4,7 +4,6 @@ import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;
-import com.eodya.api.place.domain.PlaceTag;
 import com.eodya.api.place.domain.Tag;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.users.domain.User;
@@ -103,5 +102,4 @@ public class PlaceCreateRequest {
                 .addressDepth1(addressDepth1)
                 .build();
     }
-
 }
