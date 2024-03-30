@@ -44,18 +44,22 @@ public class Recommendation extends BaseEntity {
         this.user.getRecommendations().add(this);
     }
 
+    public void setPlace(Place place) {
+        this.place = place;
+        this.place.getRecommendations().add(this);
+    }
+
     public void updateStatus(RecommendationStatus status) {
         this.status = status;
     }
 
     @Builder
     private Recommendation(
-            RecommendationStatus status,
             User user,
             Place place
     ) {
-        this.status = status;
-        this.place = place;
+        this.status = TRUE;
+        setPlace(place);
         setUser(user);
     }
 }

@@ -17,14 +17,15 @@ public class RecommendationController {
 
     private final RecommendationService recommendationService;
 
-    @PatchMapping("/{reviewId}")
+    @PatchMapping("/{placeId}")
     public ResponseEntity<Void> updateRecommendationStatus(
             @Login Long loggedInMemberId,
-            @PathVariable Long reviewId,
+            @PathVariable Long placeId,
             @Valid @RequestBody RecommendationChangeStatusRequest changeStatusRequest
     ) {
         recommendationService.updateRecommendationStatus(
-                reviewId,
+                loggedInMemberId,
+                placeId,
                 changeStatusRequest
         );
 

@@ -18,7 +18,7 @@ import static com.eodya.api.place.exception.PlaceExceptionCode.*;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
-    @Query("SELECT p FROM Place p ORDER BY (SELECT COUNT(b.id) FROM Bookmark b WHERE b.place = p) DESC")
+    @Query("SELECT p FROM Place p ORDER BY (SELECT COUNT(b.id) FROM Bookmark b WHERE b.place = p AND b.status = 'TRUE') DESC")
     List<Place> findAllByOrderByBookmarkCountDesc();
 
     @Query("select p from Place p join fetch p.placeTags where p.addressDetail = :addressDetail")

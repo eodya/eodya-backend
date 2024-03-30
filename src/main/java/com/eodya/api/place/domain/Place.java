@@ -4,6 +4,7 @@ import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
+import com.eodya.api.recommendation.domain.Recommendation;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.users.domain.User;
 import jakarta.persistence.*;
@@ -46,7 +47,7 @@ public class Place extends BaseEntity {
     @NotNull
     private int bookmarkCount;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -55,6 +56,9 @@ public class Place extends BaseEntity {
 
     @OneToMany(mappedBy = "place")
     private List<Bookmark> bookmarks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "place")
+    private List<Recommendation> recommendations = new ArrayList<>();
 
     @OneToMany(mappedBy = "place")
     private List<PlaceTag> placeTags = new ArrayList<>();
@@ -88,6 +92,16 @@ public class Place extends BaseEntity {
 
     public int getBookmarkCount() {
         return bookmarkCount;
+    }
+
+    public void addBookmarkCount() {
+        this.bookmarkCount += 1;
+    }
+
+    public void removeBookmarkCount() {
+        if (this.bookmarkCount > 0) {
+            this.bookmarkCount -= 1;
+        }
     }
 
     @Builder

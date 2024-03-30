@@ -165,10 +165,12 @@ public class PlaceService {
 
         return placeRepository.findAllByOrderByBookmarkCountDesc().stream()
                 .map(place -> PlaceRakingResponse.builder()
-                        .rank(rank.getAndIncrement())
+                        .id(place.getId())
+                        .name(place.getName())
+                        .addressDetail(place.getAddressDetail())
                         .placeImage(place.getImage())
                         .bookmarkCount((long) place.getBookmarkCount())
-                        .addressDetail(place.getAddressDetail())
+                        .rank(rank.getAndIncrement())
                         .build())
                 .toList();
     }
