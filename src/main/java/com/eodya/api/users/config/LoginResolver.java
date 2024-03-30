@@ -5,6 +5,7 @@ import static com.eodya.api.users.exception.AuthExceptionCode.INVALID_TOKEN;
 import com.eodya.api.users.exception.AuthException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,9 @@ public class LoginResolver implements HandlerMethodArgumentResolver {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         final String token = request.getHeader("Authorization");
 
+
         // 토큰 검증
-        if (!jwtTokenManager.verifyAuthToken(token)) {
+        if (Objects.isNull(token) || token.isBlank() || !jwtTokenManager.verifyAuthToken(token)) {
             throw new AuthException(INVALID_TOKEN);
         }
 
