@@ -1,5 +1,6 @@
 package com.eodya.api.review.dto.response;
 
+import com.eodya.api.place.domain.PlaceStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,5 +15,6 @@ public class ReviewDetail {
     private String nickName;
     private LocalDate reviewDate;
     private List<String> reviewImage;
+    private PlaceStatus placeStatus;
     private String reviewContent;
 }

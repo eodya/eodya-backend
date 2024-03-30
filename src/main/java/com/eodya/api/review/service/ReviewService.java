@@ -85,6 +85,7 @@ public class ReviewService {
                         .nickName(review.getUser().getNickname())
                         .reviewDate(LocalDate.parse(DateTimeFormatter.ISO_LOCAL_DATE.format(review.getReviewDate())))
                         .reviewImage(review.getImages().stream().map(ReviewImage::getImageUrl).collect(Collectors.toList()))
+                        .placeStatus(review.getPlaceStatus())
                         .reviewContent(review.getReviewContent())
                         .build())
                 .toList();
