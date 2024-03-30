@@ -2,6 +2,7 @@ package com.eodya.api.place.domain;
 
 import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
+import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.users.domain.User;
@@ -15,7 +16,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Formula;
 import org.locationtech.jts.geom.*;
 
 @Getter
@@ -52,6 +52,9 @@ public class Place extends BaseEntity {
 
     @OneToMany(mappedBy = "place")
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "place")
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     @OneToMany(mappedBy = "place")
     private List<PlaceTag> placeTags = new ArrayList<>();

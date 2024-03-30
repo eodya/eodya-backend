@@ -34,6 +34,7 @@ public class BookmarkController {
 
     ) {
         bookmarkService.updateBookmarkStatus(
+                loggedInMemberId,
                 placeId,
                 changeStatusRequest
         );
