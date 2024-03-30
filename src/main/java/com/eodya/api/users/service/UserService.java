@@ -39,6 +39,7 @@ public class UserService {
     private final JwtTokenManager jwtTokenManager;
     private final BookmarkRepository bookmarkRepository;
     private final ReviewRepository reviewRepository;
+    private final String SERVICE_NAME = "어댜";
 
     @Transactional
     public UserLoginResponse login(String token) {
@@ -47,11 +48,13 @@ public class UserService {
 
         User user = findUser.orElseGet(() -> {
             User newUser = User.builder()
-                    .nickname("어댜") //todo - name maker 클래스 만들기
+                    .nickname(SERVICE_NAME)
                     .OAuthId(oauthId)
                     .OAuthProvider(OAuthProvider.KAKAO)
                     .build();
-            return userRepository.save(newUser);
+            userRepository.save(newUser);
+            newUser.setUserNickName(SERVICE_NAME+newUser.getId());
+            return newUser;
         });
 
        String accessToken = jwtTokenManager.createAccessToken(user.getId());
