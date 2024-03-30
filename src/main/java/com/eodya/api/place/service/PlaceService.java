@@ -2,7 +2,9 @@ package com.eodya.api.place.service;
 
 import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
+import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.bookmark.domain.BookmarkStatus;
+import com.eodya.api.bookmark.repository.BookmarkRepository;
 import com.eodya.api.common.service.S3Service;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;
@@ -66,6 +68,7 @@ public class PlaceService {
     private final ReviewRepository reviewRepository;
     private final PlaceTagRepository placeTagRepository;
     private final TagRepository tagRepository;
+    private final BookmarkRepository bookmarkRepository;
     private static GeometryFactory geometryFactory = new GeometryFactory();
 
     @Transactional
@@ -200,11 +203,17 @@ public class PlaceService {
         }
     }
 
-    public PlaceDetailResponse getPlaceDetail(Long placeId) {
+    public PlaceDetailResponse getPlaceDetail(Long userId, Long placeId) {
         Place place = placeRepository.getPlaceById(placeId);
         PlaceStatus placeStatus = getPlaceRecentReview(place);
 
-        return PlaceDetailResponse.from(place, placeStatus);
+        boolean bookmarkStatus = false;
+        Optional<Bookmark> findBookmark = bookmarkRepository.findByUserIdAndPlaceId(userId, place.getId());
+
+        if(findBookmark.isPresent() && findBookmark.get().getStatus().equals(BookmarkStatus.TRUE)){
+            bookmarkStatus = true;
+        }
+        return PlaceDetailResponse.from(place, placeStatus, bookmarkStatus);
     }
 
     private PlaceStatus getPlaceRecentReview(Place place) {
