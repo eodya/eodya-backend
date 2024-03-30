@@ -40,5 +40,4 @@ public class BookmarkService {
 
         bookmarkRepository.save(bookmark);
     }
-
 }

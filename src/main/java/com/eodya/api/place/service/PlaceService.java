@@ -29,15 +29,11 @@ import com.eodya.api.review.repository.ReviewRepository;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.users.repository.UserRepository;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -45,6 +41,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.eodya.api.place.dto.response.PlaceRakingResponse;
@@ -161,17 +158,37 @@ public class PlaceService {
     }
 
     public List<PlaceRakingResponse> findPlaceRankingByBookmarks() {
-        AtomicLong rank = new AtomicLong(1);
+        List<Place> places = placeRepository.findAll(Sort.by("bookmarkCount").descending());
+        List<PlaceRakingResponse> responses = new ArrayList<>();
+        long rank = 1;
+        long lastBookmarkCount = -1;
+        long skippedRanks = 0;
 
-        return placeRepository.findAllByOrderByBookmarkCountDesc().stream()
-                .map(place -> PlaceRakingResponse.builder()
-                        .rank(rank.getAndIncrement())
-                        .placeImage(place.getImage())
-                        .bookmarkCount((long) place.getBookmarkCount())
-                        .addressDetail(place.getAddressDetail())
-                        .build())
-                .toList();
+        for (Place place : places) {
+            long currentBookmarkCount = place.getBookmarkCount();
+
+            if (currentBookmarkCount != lastBookmarkCount) {
+                rank += skippedRanks;
+                skippedRanks = 1;
+            } else {
+                skippedRanks++;
+            }
+
+            responses.add(PlaceRakingResponse.builder()
+                    .id(place.getId())
+                    .name(place.getName())
+                    .addressDetail(place.getAddressDetail())
+                    .placeImage(place.getImage())
+                    .bookmarkCount(currentBookmarkCount)
+                    .rank(rank)
+                    .build());
+
+            lastBookmarkCount = currentBookmarkCount;
+        }
+
+        return responses;
     }
+
 
     public PlaceAllByAddressResponse findAllPlaceByAddress(Long userId, PlaceAllByAddressRequest request, Pageable pageable) {
         User user = userRepository.getUserById(userId);

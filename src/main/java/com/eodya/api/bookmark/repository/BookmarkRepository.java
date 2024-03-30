@@ -12,10 +12,6 @@ import static com.eodya.api.bookmark.exception.BookmarkExceptionCode.*;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    default Bookmark getBookMarkById(Long bookMarkId) {
-        return findById(bookMarkId).orElseThrow(() -> new BookmarkException(BOOKMARK_STATUS_NOT_FOUND, bookMarkId));
-    }
-
     Optional<Bookmark> findByPlaceId(Long placeId);
 
     Page<Bookmark> findByUserIdAndStatus(Long userId, BookmarkStatus status, Pageable pageable);
