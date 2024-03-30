@@ -19,7 +19,6 @@ public class BookmarkFixture {
         return Bookmark.builder()
                 .user(testuser)
                 .place(testPlace)
-                .status(BookmarkStatus.TRUE)
                 .build();
     }
 
@@ -32,7 +31,6 @@ public class BookmarkFixture {
                     User user = users.get(i % users.size());
                     Place place = places.get(i % places.size());
                     return Bookmark.builder()
-                            .status(BookmarkStatus.TRUE)
                             .user(user)
                             .place(place)
                             .build();
