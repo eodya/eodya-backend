@@ -5,6 +5,8 @@ import com.eodya.api.review.dto.response.ReviewIdResponse;
 import com.eodya.api.review.dto.response.ReviewProfileResponse;
 import com.eodya.api.review.service.ReviewService;
 import com.eodya.api.users.config.Login;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +22,15 @@ import static org.springframework.http.HttpStatus.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/review")
+@Tag(name = "Review", description = "리뷰 API")
 public class ReviewController {
 
     private final ReviewService reviewService;
+
+    @Operation(
+            summary = "리뷰 생성 API",
+            description = "리뷰를 생성하거나 리뷰목록을 불러옵니다."
+    )
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<ReviewIdResponse> createReview(

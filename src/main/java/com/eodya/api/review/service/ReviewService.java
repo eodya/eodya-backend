@@ -49,7 +49,6 @@ public class ReviewService {
         Place place = placeRepository.getPlaceById(reviewCreateRequest.getPlaceId());
 
         Review review = reviewRepository.save(reviewCreateRequest.toEntity(user, place));
-        Review savedReview = reviewRepository.save(review);
 
         if (images != null && !images.isEmpty()) {
             List<String> imageUrls = s3Service.uploadFiles(images);
@@ -57,7 +56,7 @@ public class ReviewService {
             for (String imageUrl : imageUrls) {
                 ReviewImage reviewImage = ReviewImage.builder()
                         .imageUrl(imageUrl)
-                        .review(savedReview)
+                        .review(review)
                         .build();
 
                 reviewImageRepository.save(reviewImage);

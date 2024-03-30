@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.OK;
 
-@Tag(name = "Bookmark", description = "북마크 API")
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/bookmark")
+@Tag(name = "Bookmark", description = "북마크 API")
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;

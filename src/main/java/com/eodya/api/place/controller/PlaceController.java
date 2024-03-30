@@ -8,6 +8,8 @@ import com.eodya.api.place.dto.response.PlaceAllByAddressResponse;
 import com.eodya.api.place.dto.response.PlaceAllByTagResponse;
 import com.eodya.api.place.service.PlaceService;
 import com.eodya.api.users.config.Login;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +35,15 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/place")
+@Tag(name = "Place", description = "장소 API")
 public class PlaceController {
 
     private final PlaceService placeService;
+
+    @Operation(
+            summary = "장소 생성 API",
+            description = "장소를 생성하고 랭킹순으로 불러옵니다."
+    )
 
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
