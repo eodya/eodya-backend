@@ -5,11 +5,13 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import com.eodya.api.users.config.Login;
 import com.eodya.api.users.dto.request.UserUpdateNickNameRequest;
 import com.eodya.api.users.dto.request.UserLoginRequest;
+import com.eodya.api.users.dto.response.UserInfoResponse;
 import com.eodya.api.users.dto.response.UserLoginResponse;
 import com.eodya.api.users.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +40,11 @@ public class UsersController {
         userService.updateNickName(userId, request.getNickname());
         return ResponseEntity.status(NO_CONTENT)
                 .build();
+    }
+
+    @GetMapping("/my/info")
+    public ResponseEntity<UserInfoResponse> getMyInfo(@Login Long userId) {
+        return ResponseEntity.ok().body(userService.getMyInfo(userId));
     }
 
 }

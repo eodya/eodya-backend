@@ -5,6 +5,7 @@ import static com.eodya.api.users.exception.UserExceptionCode.ALREADY_EXIST_NICK
 import com.eodya.api.users.config.JwtTokenManager;
 import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
+import com.eodya.api.users.dto.response.UserInfoResponse;
 import com.eodya.api.users.dto.response.UserLoginResponse;
 import com.eodya.api.users.exception.UserException;
 import com.eodya.api.users.repository.UserRepository;
@@ -54,6 +55,11 @@ public class UserService {
 
         user.setUserNickName(nickName);
         userRepository.save(user);
+    }
+
+    public UserInfoResponse getMyInfo(Long userId) {
+        User user = userRepository.getUserById(userId);
+        return UserInfoResponse.from(user);
     }
 
 }
