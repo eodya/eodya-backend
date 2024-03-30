@@ -18,7 +18,6 @@ public class RecommendationFixture {
         return Recommendation.builder()
                 .user(testuser)
                 .place(testPlace)
-                .status(RecommendationStatus.TRUE)
                 .build();
     }
 
@@ -31,7 +30,6 @@ public class RecommendationFixture {
                     User user = users.get(i % users.size());
                     Place place = places.get(i % places.size());
                     return Recommendation.builder()
-                            .status(RecommendationStatus.TRUE)
                             .user(user)
                             .place(place)
                             .build();

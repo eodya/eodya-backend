@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -18,8 +19,7 @@ import static com.eodya.api.place.exception.PlaceExceptionCode.*;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
-    @Query("SELECT p FROM Place p ORDER BY (SELECT COUNT(b.id) FROM Bookmark b WHERE b.place = p AND b.status = 'TRUE') DESC")
-    List<Place> findAllByOrderByBookmarkCountDesc();
+    List<Place> findAll(Sort sort);
 
     @Query("select p from Place p join fetch p.placeTags where p.addressDetail = :addressDetail")
     Optional<Place> findByAddressDetail(@Param("addressDetail") String addressDetail);
