@@ -141,6 +141,7 @@ public class PlaceService {
 
          return placeRepository.findByPlaceIds(placeIds)
                 .stream().map(place -> PlaceAllByTagResponse.builder()
+                         .placeId(place.getId())
                          .x(place.getPoint().getX())
                          .y(place.getPoint().getY())
                          .build()).toList();

@@ -10,6 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlaceAllByTagResponse {
 
+    private Long placeId;
     private double x;
     private double y;
 }
