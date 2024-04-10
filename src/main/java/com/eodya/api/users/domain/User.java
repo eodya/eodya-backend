@@ -5,15 +5,8 @@ import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.recommendation.domain.Recommendation;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.place.domain.Place;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.eodya.api.users.util.AuthPrividerConverter;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
@@ -28,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//todo - bookmark, recommend status = true
 public class User extends BaseEntity {
 
     @Id
@@ -44,8 +36,8 @@ public class User extends BaseEntity {
     @Column(name = "oauth_id")
     private String OAuthId;
 
-    @Enumerated(EnumType.STRING)
     @NotNull
+    @Convert(converter = AuthPrividerConverter.class)
     @Column(name = "oauth_provider")
     private OAuthProvider OAuthProvider;
 
@@ -72,7 +64,7 @@ public class User extends BaseEntity {
         this.OAuthProvider = OAuthProvider;
     }
 
-    public void setUserNickName(String nickname) {
+    public void changeNickName(String nickname) {
         this.nickname = nickname;
     }
 }

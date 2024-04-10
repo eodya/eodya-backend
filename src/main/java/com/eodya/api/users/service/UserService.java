@@ -53,7 +53,7 @@ public class UserService {
                     .OAuthProvider(OAuthProvider.KAKAO)
                     .build();
             userRepository.save(newUser);
-            newUser.setUserNickName(SERVICE_NAME+newUser.getId());
+            newUser.changeNickName(SERVICE_NAME+newUser.getId());
             return newUser;
         });
 
@@ -74,7 +74,7 @@ public class UserService {
                     throw new UserException(ALREADY_EXIST_NICKNAME);
                 });
 
-        user.setUserNickName(nickName);
+        user.changeNickName(nickName);
         userRepository.save(user);
     }
 

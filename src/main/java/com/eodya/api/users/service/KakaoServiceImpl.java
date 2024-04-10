@@ -4,7 +4,7 @@ import static com.eodya.api.users.exception.AuthExceptionCode.INVALID_KAKAO_TOKE
 
 import com.eodya.api.external.login.kakao.KakaoApiClient;
 import com.eodya.api.external.login.kakao.dto.response.KakaoUserResponse;
-import com.eodya.api.users.exception.AuthException;
+import com.eodya.api.users.exception.OAuthException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class KakaoServiceImpl implements SocialService{
             KakaoUserResponse userId = kakaoApiClient.getUserInformation("Bearer " + token);
             return String.valueOf(userId.getId());
         } catch (FeignException e) {
-            throw new AuthException(INVALID_KAKAO_TOKEN);
+            throw new OAuthException(INVALID_KAKAO_TOKEN);
         }
     }
 

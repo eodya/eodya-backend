@@ -1,6 +1,6 @@
 package com.eodya.api.users.config;
 
-import com.eodya.api.users.exception.AuthException;
+import com.eodya.api.users.exception.OAuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +14,6 @@ import javax.xml.bind.DatatypeConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
@@ -61,7 +60,7 @@ public class JwtTokenManager {
 
             return claims.getSubject();
         } catch (SignatureException | ExpiredJwtException e) {
-            throw new AuthException(INVALID_TOKEN);
+            throw new OAuthException(INVALID_TOKEN);
         }
     }
 
@@ -70,9 +69,9 @@ public class JwtTokenManager {
             getClaimsFromToken(token);
             return true;
         } catch (ExpiredJwtException e) {
-            throw new AuthException(EXPIRED_TOKEN);
+            throw new OAuthException(EXPIRED_TOKEN);
         } catch (SignatureException e) {
-            throw new AuthException(INVALID_TOKEN);
+            throw new OAuthException(INVALID_TOKEN);
         }
     }
 
