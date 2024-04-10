@@ -4,8 +4,10 @@ import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.place.domain.Place;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,24 +25,14 @@ public class AddressDepth2 extends BaseEntity {
     private Long id;
 
     @NotNull
+    @Column(length = 50)
     private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_depth1_id")
-    private AddressDepth1 depth1;
-
 
     @OneToMany(mappedBy = "depth2")
     private List<Place> place = new ArrayList<>();
 
-    public void setDepth1(AddressDepth1 depth1) {
-        this.depth1 = depth1;
-        this.depth1.getDepth2().add(this);
-    }
-
     @Builder
-    private AddressDepth2(String name, AddressDepth1 addressDepth1) {
+    public AddressDepth2(String name) {
         this.name = name;
-        this.setDepth1(addressDepth1);
     }
 }

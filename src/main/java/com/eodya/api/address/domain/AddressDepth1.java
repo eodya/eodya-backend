@@ -25,6 +25,7 @@ public class AddressDepth1 extends BaseEntity {
     private Long id;
 
     @NotNull
+    @Column(length = 30)
     private String name;
 
     @OneToMany(mappedBy = "depth1")
@@ -36,5 +37,9 @@ public class AddressDepth1 extends BaseEntity {
     @Builder
     private AddressDepth1(String name) {
         this.name = name;
+    }
+
+    public void addDepth2(AddressDepth2 depth2) {
+        this.depth2.add(depth2);
     }
 }
