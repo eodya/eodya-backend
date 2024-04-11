@@ -62,8 +62,4 @@ public class Review extends BaseEntity {
         this.placeStatus = placeStatus;
         this.reviewContent = reviewContent;
     }
-
-    public void addUser(User user) {
-        this.user = user;
-    }
 }

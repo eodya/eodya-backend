@@ -1,14 +1,8 @@
 package com.eodya.api.users.domain;
 
-import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
-import com.eodya.api.recommendation.domain.Recommendation;
-import com.eodya.api.place.domain.Place;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -38,8 +32,8 @@ public class User extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private OAuthProvider oauthProvider;
 
-    @OneToMany(mappedBy = "user")
-    private List<Place> places = new ArrayList<>();
+    @Embedded
+    private UserPlace userPlace = new UserPlace();
 
     @Embedded
     private UserReview userReview = new UserReview();

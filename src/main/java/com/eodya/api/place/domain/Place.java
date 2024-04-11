@@ -2,9 +2,7 @@ package com.eodya.api.place.domain;
 
 import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
-import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
-import com.eodya.api.recommendation.domain.Recommendation;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.users.domain.User;
 import jakarta.persistence.*;
@@ -48,7 +46,8 @@ public class Place extends BaseEntity {
     @NotNull
     private Integer bookmarkCount;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -67,11 +66,6 @@ public class Place extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_depth2_id")
     private AddressDepth2 addressDepth2;
-
-    public void setUser(User user) {
-        this.user = user;
-        this.user.getPlaces().add(this);
-    }
 
     public void setImage(String image) {
         this.image = image;
@@ -97,10 +91,10 @@ public class Place extends BaseEntity {
         this.point = point;
         this.name = name;
         this.addressDetail = addressDetail;
+        this.user = user;
         this.review_count = 0;
         this.bookmarkCount = 0;
         this.addressDepth1 = addressDepth1;
         this.addressDepth2 = addressDepth2;
-        setUser(user);
     }
 }
