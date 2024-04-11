@@ -20,9 +20,10 @@ public class ReviewImage extends BaseEntity {
     private Long id;
 
     @NotNull
-    @Column(name = "image_url")
+    @Column(length = 500)
     private String imageUrl;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;
@@ -30,13 +31,6 @@ public class ReviewImage extends BaseEntity {
     @Builder
     public ReviewImage(String imageUrl, Review review) {
         this.imageUrl = imageUrl;
-        setReview(review);
-    }
-
-    public void setReview(Review review) {
         this.review = review;
-        if (!review.getImages().contains(this)) {
-            review.getImages().add(this);
-        }
     }
 }
