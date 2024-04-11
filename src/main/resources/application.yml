@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${SPRING_CLOUD_AWS_CREDENTIALS_ACCESSKEY}
+      secretKey: ${SPRING_CLOUD_AWS_CREDENTIALS_SECRETKEY}
+    region:
+      static: ${SPRING_CLOUD_AWS_REGION_STATIC}
+    s3:
+      bucket: ${S3_BUCKET}
+
+jwt:
+  secret-key: ${JWT_SECRET}
+  access-token-expiration-time: ${ACCESS_TOKEN_EXPIRATION_TIME}
+  refresh-token-expiration-time: ${REFRESH_TOKEN_EXPIRATION_TIME}
+  register-token-expiration-time: ${REGISTER_TOKEN_EXPIRATION_TIME}
