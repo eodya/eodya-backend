@@ -1,7 +1,6 @@
 package com.eodya.api.domain;
 
 import com.eodya.api.bookmark.domain.Bookmark;
-import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.fixture.domain.BookmarkFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

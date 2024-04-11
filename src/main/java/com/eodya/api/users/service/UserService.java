@@ -3,7 +3,6 @@ package com.eodya.api.users.service;
 import static com.eodya.api.users.exception.UserExceptionCode.ALREADY_EXIST_NICKNAME;
 
 import com.eodya.api.bookmark.domain.Bookmark;
-import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.bookmark.repository.BookmarkRepository;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;

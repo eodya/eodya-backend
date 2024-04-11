@@ -1,7 +1,6 @@
 package com.eodya.api.bookmark.service;
 
 import com.eodya.api.bookmark.domain.Bookmark;
-import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.bookmark.dto.request.BookMarkChangeStatusRequest;
 import com.eodya.api.bookmark.repository.BookmarkRepository;
 import com.eodya.api.place.domain.Place;

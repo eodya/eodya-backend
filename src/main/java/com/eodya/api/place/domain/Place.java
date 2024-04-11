@@ -56,35 +56,21 @@ public class Place extends BaseEntity {
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "place")
-    private List<Bookmark> bookmarks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "place")
-    private List<Recommendation> recommendations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "place")
     private List<PlaceTag> placeTags = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_depth1_id")
-    private AddressDepth1 depth1;
+    private AddressDepth1 addressDepth1;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_depth2_id")
-    private AddressDepth2 depth2;
+    private AddressDepth2 addressDepth2;
 
     public void setUser(User user) {
         this.user = user;
         this.user.getPlaces().add(this);
-    }
-
-    public void setDepth1(AddressDepth1 addressDepth1) {
-        this.depth1 = addressDepth1;
-        this.depth1.getPlace().add(this);
-    }
-
-    public void setDepth2(AddressDepth2 addressDepth2) {
-        this.depth2 = addressDepth2;
-        this.depth2.getPlace().add(this);
     }
 
     public void setImage(String image) {
@@ -97,12 +83,6 @@ public class Place extends BaseEntity {
 
     public void addBookmarkCount() {
         this.bookmarkCount += 1;
-    }
-
-    public void removeBookmarkCount() {
-        if (this.bookmarkCount > 0) {
-            this.bookmarkCount -= 1;
-        }
     }
 
     @Builder
@@ -119,8 +99,8 @@ public class Place extends BaseEntity {
         this.addressDetail = addressDetail;
         this.review_count = 0;
         this.bookmarkCount = 0;
-        setDepth1(addressDepth1);
-        setDepth2(addressDepth2);
+        this.addressDepth1 = addressDepth1;
+        this.addressDepth2 = addressDepth2;
         setUser(user);
     }
 }

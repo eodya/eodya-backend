@@ -44,11 +44,8 @@ public class User extends BaseEntity {
     @Embedded
     private UserReview userReview = new UserReview();
 
-    @OneToMany(mappedBy = "user")
-    private List<Bookmark> bookmarks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<Recommendation> recommendations = new ArrayList<>();
+    @Embedded
+    private UserBookmark userBookmark = new UserBookmark();
 
     @Builder
     private User(

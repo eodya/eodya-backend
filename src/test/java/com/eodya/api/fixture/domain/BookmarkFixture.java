@@ -1,7 +1,6 @@
 package com.eodya.api.fixture.domain;
 
 import com.eodya.api.bookmark.domain.Bookmark;
-import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
