@@ -5,6 +5,7 @@ import com.eodya.api.auth.exception.AuthException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 import static com.eodya.api.auth.exception.AuthExceptionCode.*;
 
+@Slf4j
 @Component
 public class JwtProvider {
 
@@ -20,13 +22,13 @@ public class JwtProvider {
 
     public JwtProvider(final JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
-        final byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecretKey());
+        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecretKey());
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public AuthTokens createLoginToken(final String subject) {
-        final String accessToken = generateToken(subject, jwtProperties.getAccessTokenExpirationTime());
-        final String refreshToken = generateToken("", jwtProperties.getRefreshTokenExpirationTime());
+    public AuthTokens createLoginToken(String subject) {
+        String accessToken = generateToken(subject, jwtProperties.getAccessTokenExpirationTime());
+        String refreshToken = generateToken("", jwtProperties.getRefreshTokenExpirationTime());
 
         return AuthTokens.builder()
                 .accessToken(accessToken)
@@ -43,7 +45,7 @@ public class JwtProvider {
     }
 
     private String generateToken(String subject, Long expirationTime) {
-        final Date now = new Date();
+        Date now = new Date();
 
         return Jwts.builder()
                 .subject(subject)
@@ -100,7 +102,7 @@ public class JwtProvider {
         }
     }
 
-    public boolean isValidRefreshAndInvalidAccess(final String refreshToken, final String accessToken) {
+    public boolean isValidRefreshAndInvalidAccess(String refreshToken, String accessToken) {
         validateRefreshToken(refreshToken);
 
         try {
@@ -112,7 +114,7 @@ public class JwtProvider {
         return false;
     }
 
-    public boolean isValidRefreshAndValidAccess(final String refreshToken, final String accessToken) {
+    public boolean isValidRefreshAndValidAccess(String refreshToken, String accessToken) {
         try {
             validateRefreshToken(refreshToken);
             validateAccessToken(accessToken);
