@@ -3,9 +3,7 @@ package com.eodya.api.users.domain;
 import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.recommendation.domain.Recommendation;
-import com.eodya.api.review.domain.Review;
 import com.eodya.api.place.domain.Place;
-import com.eodya.api.users.util.AuthPrividerConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -33,13 +31,12 @@ public class User extends BaseEntity {
     private String nickname;
 
     @NotNull
-    @Column(name = "oauth_id")
-    private String OAuthId;
+    @Column(unique = true)
+    private Long oauthId;
 
     @NotNull
-    @Convert(converter = AuthPrividerConverter.class)
-    @Column(name = "oauth_provider")
-    private OAuthProvider OAuthProvider;
+    @Enumerated(value = EnumType.STRING)
+    private OAuthProvider oauthProvider;
 
     @OneToMany(mappedBy = "user")
     private List<Place> places = new ArrayList<>();
@@ -56,12 +53,12 @@ public class User extends BaseEntity {
     @Builder
     private User(
             String nickname,
-            String OAuthId,
-            OAuthProvider OAuthProvider
+            Long oauthId,
+            OAuthProvider oauthProvider
     ) {
         this.nickname = nickname;
-        this.OAuthId = OAuthId;
-        this.OAuthProvider = OAuthProvider;
+        this.oauthId = oauthId;
+        this.oauthProvider = oauthProvider;
     }
 
     public void changeNickName(String nickname) {
