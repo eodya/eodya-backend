@@ -44,8 +44,8 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Place> places = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Review> reviews = new ArrayList<>();
+    @Embedded
+    private UserReview userReview = new UserReview();
 
     @OneToMany(mappedBy = "user")
     private List<Bookmark> bookmarks = new ArrayList<>();

@@ -3,6 +3,7 @@ package com.eodya.api.review.domain;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;
+import com.eodya.api.users.domain.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -25,36 +26,43 @@ public class Review extends BaseEntity {
     private Long id;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Place place;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @NotNull
     private LocalDate reviewDate;
 
     @NotNull
     @Convert(converter = PlaceStatus.class)
-    @Column(name = "place_status")
+    @Column(name = "place_status", length = 50)
     private PlaceStatus placeStatus;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "place_id")
-    private Place place;
 
     @NotNull
     @Column(length = 1000)
     private String reviewContent;
 
-    public void setPlace(Place place) {
-        this.place = place;
-        this.place.getReviews().add(this);
-    }
-
     @Builder
     private Review(
+            Place place,
+            User user,
             LocalDate reviewDate,
             PlaceStatus placeStatus,
-            String reviewContent,
-            Place place
+            String reviewContent
     ) {
+        this.place = place;
+        this.user = user;
         this.reviewDate = reviewDate;
         this.placeStatus = placeStatus;
         this.reviewContent = reviewContent;
-        setPlace(place);
+    }
+
+    public void addUser(User user) {
+        this.user = user;
     }
 }
