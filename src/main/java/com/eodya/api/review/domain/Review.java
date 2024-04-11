@@ -3,6 +3,7 @@ package com.eodya.api.review.domain;
 import com.eodya.api.common.entity.BaseEntity;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;
+import com.eodya.api.place.util.PlaceStatusConverter;
 import com.eodya.api.users.domain.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -39,7 +40,7 @@ public class Review extends BaseEntity {
     private LocalDate reviewDate;
 
     @NotNull
-    @Convert(converter = PlaceStatus.class)
+    @Convert(converter = PlaceStatusConverter.class)
     @Column(name = "place_status", length = 50)
     private PlaceStatus placeStatus;
 

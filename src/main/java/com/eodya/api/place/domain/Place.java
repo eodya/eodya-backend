@@ -36,16 +36,17 @@ public class Place extends BaseEntity {
     @NotNull
     private String name;
 
+    @NotNull
     private String image;
 
     @NotNull
     private String addressDetail;
 
     @NotNull
-    private int recommendCount;
+    private Integer review_count;
 
     @NotNull
-    private int bookmarkCount;
+    private Integer bookmarkCount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
@@ -116,7 +117,7 @@ public class Place extends BaseEntity {
         this.point = point;
         this.name = name;
         this.addressDetail = addressDetail;
-        this.recommendCount = 0;
+        this.review_count = 0;
         this.bookmarkCount = 0;
         setDepth1(addressDepth1);
         setDepth2(addressDepth2);
