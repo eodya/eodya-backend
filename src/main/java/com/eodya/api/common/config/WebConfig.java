@@ -1,6 +1,6 @@
 package com.eodya.api.common.config;
 
-import com.eodya.api.users.config.LoginResolver;
+import com.eodya.api.auth.domain.config.resolver.LoginResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

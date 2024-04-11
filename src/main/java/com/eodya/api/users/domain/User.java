@@ -1,5 +1,6 @@
 package com.eodya.api.users.domain;
 
+import com.eodya.api.auth.domain.oauth.OauthProvider;
 import com.eodya.api.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -30,7 +31,7 @@ public class User extends BaseEntity {
 
     @NotNull
     @Enumerated(value = EnumType.STRING)
-    private OAuthProvider oauthProvider;
+    private OauthProvider oauthProvider;
 
     @Embedded
     private UserPlace userPlace = new UserPlace();
@@ -45,7 +46,7 @@ public class User extends BaseEntity {
     private User(
             String nickname,
             Long oauthId,
-            OAuthProvider oauthProvider
+            OauthProvider oauthProvider
     ) {
         this.nickname = nickname;
         this.oauthId = oauthId;
