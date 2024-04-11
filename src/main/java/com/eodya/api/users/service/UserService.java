@@ -1,74 +1,117 @@
 package com.eodya.api.users.service;
 
-import static com.eodya.api.users.exception.UserExceptionCode.ALREADY_EXIST_NICKNAME;
+import static com.eodya.api.users.exception.UserExceptionCode.*;
 
-import com.eodya.api.bookmark.repository.BookmarkRepository;
-import com.eodya.api.review.repository.ReviewRepository;
-import com.eodya.api.users.config.JwtTokenManager;
-import com.eodya.api.users.domain.OAuthProvider;
+import com.eodya.api.auth.domain.config.property.JwtProperties;
+import com.eodya.api.auth.domain.token.AuthTokens;
+import com.eodya.api.auth.domain.token.JwtProvider;
+import com.eodya.api.auth.domain.token.RefreshToken;
+import com.eodya.api.auth.repository.RedisRepository;
+import com.eodya.api.auth.service.OauthService;
 import com.eodya.api.users.domain.User;
-import com.eodya.api.users.dto.response.UserInfoResponse;
-import com.eodya.api.users.dto.response.UserLoginResponse;
+import com.eodya.api.users.dto.request.AuthenticatedUserResponse;
+import com.eodya.api.users.dto.request.UserCreateRequest;
 import com.eodya.api.users.exception.UserException;
 import com.eodya.api.users.repository.UserRepository;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
+    private static final String REFRESH_TOKEN_KEY = "refresh_token";
+
     private final UserRepository userRepository;
-    private final SocialService socialService;
-    private final JwtTokenManager jwtTokenManager;
-    private final BookmarkRepository bookmarkRepository;
-    private final ReviewRepository reviewRepository;
-    private final String SERVICE_NAME = "어댜";
+    private final RedisRepository redisRepository;
+    private final JwtProvider jwtProvider;
+    private final JwtProperties jwtProperties;
 
-    @Transactional
-    public UserLoginResponse login(String token) {
-       Long oauthId = Long.valueOf(socialService.getOAuthId(token));
-       Optional<User> findUser = userRepository.findByOauthId(oauthId);
+    public AuthenticatedUserResponse createMember(UserCreateRequest userCreateRequest) {
+        validateIsDuplicatedUserInfo(userCreateRequest);
 
-        User user = findUser.orElseGet(() -> {
-            User newUser = User.builder()
-                    .nickname(SERVICE_NAME)
-                    .oauthId(oauthId)
-                    .oauthProvider(OAuthProvider.KAKAO)
-                    .build();
-            userRepository.save(newUser);
-            newUser.changeNickName(SERVICE_NAME+newUser.getId());
-            return newUser;
-        });
+        User user = userCreateRequest.toEntity();
+        User savedUser = userRepository.save(user);
 
-       String accessToken = jwtTokenManager.createAccessToken(user.getId());
+        AuthTokens loginTokens = jwtProvider.createLoginToken(String.valueOf(savedUser.getId()));
 
-       return UserLoginResponse.builder()
-               .token(accessToken)
-               .userId(user.getId())
-               .nickname(user.getNickname())
-               .build();
+        RefreshToken refreshToken = RefreshToken.builder()
+                .token(loginTokens.getRefreshToken())
+                .userId(savedUser.getId())
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        redisRepository.saveHash(
+                REFRESH_TOKEN_KEY,
+                refreshToken.getToken(),
+                refreshToken,
+                jwtProperties.getRefreshTokenExpirationTime()
+        );
+
+        return AuthenticatedUserResponse.of(savedUser, loginTokens);
     }
 
-    @Transactional
-    public void updateNickName(Long userId, String nickName) {
-        User user = userRepository.getUserById(userId);
-        userRepository.findByNickname(nickName)
-                .ifPresent(e -> {
-                    throw new UserException(ALREADY_EXIST_NICKNAME);
-                });
+    private void validateIsDuplicatedUserInfo(UserCreateRequest memberCreateRequest) {
+        final String nickname = memberCreateRequest.getNickname();
+        final Long oauthId = memberCreateRequest.getOauthId();
 
-        user.changeNickName(nickName);
-        userRepository.save(user);
+        if (userRepository.existsByNicknameOrOauthId(nickname, oauthId)) {
+            throw new UserException(USER_IS_EXISTED, nickname, oauthId);
+        }
     }
 
-    public UserInfoResponse getMyInfo(Long userId) {
-        User user = userRepository.getUserById(userId);
-        return UserInfoResponse.from(user);
-    }
+//
+//    private final UserRepository userRepository;
+//    private final SocialService socialService;
+//    private final JwtTokenManager jwtTokenManager;
+//    private final BookmarkRepository bookmarkRepository;
+//    private final ReviewRepository reviewRepository;
+//    private final String SERVICE_NAME = "어댜";
+//
+//    @Transactional
+//    public UserLoginResponse login(String token) {
+//       Long oauthId = Long.valueOf(socialService.getOAuthId(token));
+//       Optional<User> findUser = userRepository.findByOauthId(oauthId);
+//
+//        User user = findUser.orElseGet(() -> {
+//            User newUser = User.builder()
+//                    .nickname(SERVICE_NAME)
+//                    .oauthId(oauthId)
+//                    .oauthProvider(OauthProvider.KAKAO)
+//                    .build();
+//            userRepository.save(newUser);
+//            newUser.changeNickName(SERVICE_NAME+newUser.getId());
+//            return newUser;
+//        });
+//
+//       String accessToken = jwtTokenManager.createAccessToken(user.getId());
+//
+//       return UserLoginResponse.builder()
+//               .token(accessToken)
+//               .userId(user.getId())
+//               .nickname(user.getNickname())
+//               .build();
+//    }
+//
+//    @Transactional
+//    public void updateNickName(Long userId, String nickName) {
+//        User user = userRepository.getUserById(userId);
+//        userRepository.findByNickname(nickName)
+//                .ifPresent(e -> {
+//                    throw new UserException(ALREADY_EXIST_NICKNAME);
+//                });
+//
+//        user.changeNickName(nickName);
+//        userRepository.save(user);
+//    }
+//
+//    public UserInfoResponse getMyInfo(Long userId) {
+//        User user = userRepository.getUserById(userId);
+//        return UserInfoResponse.from(user);
+//    }
 
 //    public UserMyBookmarkResponse getMyBookmarks(Long userId, Pageable pageable) {
 //        Page<Bookmark> bookmarks = bookmarkRepository.findByUserIdAndStatus(userId, pageable);

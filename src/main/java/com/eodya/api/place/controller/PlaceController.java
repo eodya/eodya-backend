@@ -1,36 +1,8 @@
 package com.eodya.api.place.controller;
 
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-
-import com.eodya.api.place.dto.request.PlaceAllByAddressRequest;
-import com.eodya.api.place.dto.request.PlaceCreateRequest;
-import com.eodya.api.place.dto.response.PlaceAllByAddressResponse;
-import com.eodya.api.place.dto.response.PlaceAllByTagResponse;
-import com.eodya.api.place.dto.response.PlaceDetailResponse;
-import com.eodya.api.place.service.PlaceService;
-import com.eodya.api.users.config.Login;
-import jakarta.validation.Valid;
-import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.eodya.api.place.dto.response.PlaceRakingResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor

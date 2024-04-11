@@ -1,4 +1,4 @@
-package com.eodya.api.users.config;
+package com.eodya.api.auth.domain.config.resolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,6 +1,6 @@
 package com.eodya.api.fixture.domain;
 
-import com.eodya.api.users.domain.OAuthProvider;
+import com.eodya.api.auth.domain.oauth.OauthProvider;
 import com.eodya.api.users.domain.User;
 
 import java.util.List;
@@ -13,11 +13,11 @@ public class UserFixture {
         return User.builder()
                 .nickname("테스트 유저 닉네임")
                 .oauthId(1L)
-                .oauthProvider(OAuthProvider.KAKAO)
+                .oauthProvider(OauthProvider.KAKAO)
                 .build();
     }
 
-    public static List<User> usersBuild(int count, OAuthProvider OAuthProvider) {
+    public static List<User> usersBuild(int count, OauthProvider OAuthProvider) {
         return IntStream.range(0, count)
                 .mapToObj(i -> User.builder()
                         .nickname(String.format("테스트 유저 닉네임 %d", i))

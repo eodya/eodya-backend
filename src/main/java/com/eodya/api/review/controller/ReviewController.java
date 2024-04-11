@@ -1,21 +1,8 @@
 package com.eodya.api.review.controller;
 
-import com.eodya.api.review.dto.request.ReviewCreateRequest;
-import com.eodya.api.review.dto.response.ReviewIdResponse;
-import com.eodya.api.review.dto.response.ReviewProfileResponse;
 import com.eodya.api.review.service.ReviewService;
-import com.eodya.api.users.config.Login;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequiredArgsConstructor

@@ -3,13 +3,15 @@ package com.eodya.api.users.repository;
 
 import com.eodya.api.users.domain.User;
 import com.eodya.api.users.exception.UserException;
+
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import static com.eodya.api.users.exception.UserExceptionCode.USER_NOT_FOUND;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-  
+
     Optional<User> findByOauthId(Long oauthId);
 
     default User getUserById(Long userId) {
@@ -17,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     }
 
     Optional<User> findByNickname(String nickName);
+
+    Boolean existsByNicknameOrOauthId(String nickname, Long oauthId);
 }

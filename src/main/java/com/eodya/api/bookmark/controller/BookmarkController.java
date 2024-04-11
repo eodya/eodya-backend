@@ -1,16 +1,8 @@
 package com.eodya.api.bookmark.controller;
 
-import com.eodya.api.bookmark.dto.request.BookMarkChangeStatusRequest;
-import com.eodya.api.bookmark.service.BookmarkService;
-import com.eodya.api.users.config.Login;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.HttpStatus.OK;
 
 @Tag(name = "Bookmark", description = "북마크 API")
 

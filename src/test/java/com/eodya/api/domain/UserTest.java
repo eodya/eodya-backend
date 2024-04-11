@@ -1,6 +1,6 @@
 package com.eodya.api.domain;
 
-import com.eodya.api.users.domain.OAuthProvider;
+import com.eodya.api.auth.domain.oauth.OauthProvider;
 import com.eodya.api.users.domain.User;
 import com.eodya.api.fixture.domain.UserFixture;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static com.eodya.api.users.domain.OAuthProvider.KAKAO;
+import static com.eodya.api.auth.domain.oauth.OauthProvider.KAKAO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -34,7 +34,7 @@ class UserTest {
     @DisplayName("정상적으로 여러 명의 유저를 생성할 수 있다.")
     void createUsers_Success(int count) {
         //given
-        List<User> users = UserFixture.usersBuild(count, OAuthProvider.KAKAO);
+        List<User> users = UserFixture.usersBuild(count, OauthProvider.KAKAO);
 
         //when & then
         users.forEach(user -> {
