@@ -191,5 +191,6 @@ deploy/
 .env
 secrt/
 src/main/resources/application-*.yaml
+src/main/resources/application.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/java,macos,intellij+all,gradle
