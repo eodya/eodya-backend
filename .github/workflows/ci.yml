@@ -29,6 +29,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }} 
+          REDIS_HOST: ${{ secrets.REDIS_HOST }} 
+          REDIS_PORT: ${{ secrets.REDIS_PORT }} 
         run: |
           export SPRING_CLOUD_AWS_CREDENTIALS_ACCESSKEY=$AWS_ACCESS_KEY
           export SPRING_CLOUD_AWS_CREDENTIALS_SECRETKEY=$AWS_SECRET_KEY
