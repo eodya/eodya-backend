@@ -2,7 +2,7 @@ package com.eodya.api.fixture.domain;
 
 import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.place.domain.Place;
-import com.eodya.api.users.domain.OAuthProvider;
+import com.eodya.api.auth.domain.oauth.OauthProvider;
 import com.eodya.api.users.domain.User;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class BookmarkFixture {
 
     public static List<Bookmark> bookmarksBuilder(int count) {
 
-        List<User> users = UserFixture.usersBuild(count, OAuthProvider.KAKAO);
+        List<User> users = UserFixture.usersBuild(count, OauthProvider.KAKAO);
         List<Place> places = PlaceFixture.placesBuild(count);
         List<Bookmark> bookmarks = IntStream.range(0, count)
                 .mapToObj(i -> {
