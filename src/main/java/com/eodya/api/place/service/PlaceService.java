@@ -1,9 +1,12 @@
 package com.eodya.api.place.service;
 
 
-//@Service
-//@RequiredArgsConstructor
-//public class PlaceService {
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class PlaceService {
 //
 //    private static final int MAX_PLACE_IMAGE_COUNT = 2;
 //
@@ -190,4 +193,4 @@ package com.eodya.api.place.service;
 //                .get()
 //                .getPlaceStatus();
 //    }
-//}
+}

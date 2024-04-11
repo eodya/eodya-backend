@@ -15,28 +15,25 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BookmarkService {
 
-    private final BookmarkRepository bookmarkRepository;
-    private final UserRepository userRepository;
-    private final PlaceRepository placeRepository;
-
-    @Transactional
-    public void updateBookmarkStatus(
-            Long userId,
-            Long placeId,
-            BookMarkChangeStatusRequest changeStatusRequest
-    ) {
-        User user = userRepository.getUserById(userId);
-        Place place = placeRepository.getPlaceById(placeId);
-
-        Bookmark bookmark = bookmarkRepository.findByPlaceId(placeId)
-                .orElseGet(() -> Bookmark.builder()
-                        .place(place)
-                        .user(user)
-                        .build());
-
-        BookmarkStatus bookmarkStatus = changeStatusRequest.isCurrentStatus() ? BookmarkStatus.TRUE : BookmarkStatus.FALSE;
-        bookmark.updateStatus(bookmarkStatus);
-
-        bookmarkRepository.save(bookmark);
-    }
+//    private final BookmarkRepository bookmarkRepository;
+//    private final UserRepository userRepository;
+//    private final PlaceRepository placeRepository;
+//
+//    @Transactional
+//    public void updateBookmarkStatus(
+//            Long userId,
+//            Long placeId,
+//            BookMarkChangeStatusRequest changeStatusRequest
+//    ) {
+//        User user = userRepository.getUserById(userId);
+//        Place place = placeRepository.getPlaceById(placeId);
+//
+//        Bookmark bookmark = bookmarkRepository.findByPlaceId(placeId)
+//                .orElseGet(() -> Bookmark.builder()
+//                        .place(place)
+//                        .user(user)
+//                        .build());
+//
+//        bookmarkRepository.save(bookmark);
+//    }
 }

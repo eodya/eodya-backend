@@ -2,7 +2,7 @@ package com.eodya.api.users.config;
 
 import static com.eodya.api.users.exception.AuthExceptionCode.INVALID_TOKEN;
 
-import com.eodya.api.users.exception.OAuthException;
+import com.eodya.api.users.exception.AuthException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
@@ -33,7 +33,7 @@ public class LoginResolver implements HandlerMethodArgumentResolver {
 
         // 토큰 검증
         if (Objects.isNull(token) || token.isBlank() || !jwtTokenManager.verifyAuthToken(token)) {
-            throw new OAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
 
         // 유저 아이디 반환
@@ -41,7 +41,7 @@ public class LoginResolver implements HandlerMethodArgumentResolver {
         try {
             return Long.parseLong(tokenContents);
         } catch (NumberFormatException e) {
-            throw new OAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 }

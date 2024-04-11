@@ -29,9 +29,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Service
-//@RequiredArgsConstructor
-//public class ReviewService {
+@Service
+@RequiredArgsConstructor
+public class ReviewService {
 //
 //    private final ReviewImageRepository reviewImageRepository;
 //    private final ReviewRepository reviewRepository;
@@ -104,4 +104,4 @@ import java.util.stream.Collectors;
 //                new PlaceException(PlaceExceptionCode.PLACE_NOT_FOUNT, placeId)
 //        );
 //    }
-//}
+}

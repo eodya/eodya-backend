@@ -1,6 +1,6 @@
 package com.eodya.api.users.config;
 
-import com.eodya.api.users.exception.OAuthException;
+import com.eodya.api.users.exception.AuthException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -60,7 +60,7 @@ public class JwtTokenManager {
 
             return claims.getSubject();
         } catch (SignatureException | ExpiredJwtException e) {
-            throw new OAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 
@@ -69,9 +69,9 @@ public class JwtTokenManager {
             getClaimsFromToken(token);
             return true;
         } catch (ExpiredJwtException e) {
-            throw new OAuthException(EXPIRED_TOKEN);
+            throw new AuthException(EXPIRED_TOKEN);
         } catch (SignatureException e) {
-            throw new OAuthException(INVALID_TOKEN);
+            throw new AuthException(INVALID_TOKEN);
         }
     }
 

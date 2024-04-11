@@ -33,7 +33,7 @@ public class AddressDepth2 extends BaseEntity {
     @JoinColumn(name = "address_depth1_id")
     private AddressDepth1 addressDepth1;
 
-    @OneToMany(mappedBy = "depth2")
+    @OneToMany(mappedBy = "addressDepth2")
     private List<Place> place = new ArrayList<>();
 
     @Builder

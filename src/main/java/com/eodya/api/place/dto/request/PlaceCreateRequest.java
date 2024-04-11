@@ -4,8 +4,6 @@ import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.place.domain.Place;
 import com.eodya.api.place.domain.PlaceStatus;
-import com.eodya.api.place.domain.PlaceTag;
-import com.eodya.api.place.domain.Tag;
 import com.eodya.api.review.domain.Review;
 import com.eodya.api.users.domain.User;
 import jakarta.validation.constraints.NotBlank;
@@ -71,12 +69,6 @@ public class PlaceCreateRequest {
                 .user(user)
                 .addressDepth1(addressDepth1)
                 .addressDepth2(addressDepth2)
-                .build();
-    }
-
-    public Tag toTagEntity(String tag) {
-        return Tag.builder()
-                .name(tag)
                 .build();
     }
 

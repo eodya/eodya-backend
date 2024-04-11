@@ -3,13 +3,9 @@ package com.eodya.api.place.domain;
 import com.eodya.api.address.domain.AddressDepth1;
 import com.eodya.api.address.domain.AddressDepth2;
 import com.eodya.api.common.entity.BaseEntity;
-import com.eodya.api.review.domain.Review;
 import com.eodya.api.users.domain.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -38,10 +34,11 @@ public class Place extends BaseEntity {
     private String image;
 
     @NotNull
+    @Column(name = "address_detail")
     private String addressDetail;
 
     @NotNull
-    private Integer review_count;
+    private Integer reviewCount;
 
     @NotNull
     private Integer bookmarkCount;
@@ -50,12 +47,6 @@ public class Place extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "place")
-    private List<Review> reviews = new ArrayList<>();
-
-    @OneToMany(mappedBy = "place")
-    private List<PlaceTag> placeTags = new ArrayList<>();
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -67,16 +58,8 @@ public class Place extends BaseEntity {
     @JoinColumn(name = "address_depth2_id")
     private AddressDepth2 addressDepth2;
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public int getBookmarkCount() {
         return bookmarkCount;
-    }
-
-    public void addBookmarkCount() {
-        this.bookmarkCount += 1;
     }
 
     @Builder
@@ -84,6 +67,7 @@ public class Place extends BaseEntity {
             Point point,
             String name,
             String addressDetail,
+            String image,
             User user,
             AddressDepth1 addressDepth1,
             AddressDepth2 addressDepth2
@@ -91,8 +75,9 @@ public class Place extends BaseEntity {
         this.point = point;
         this.name = name;
         this.addressDetail = addressDetail;
+        this.image = image;
         this.user = user;
-        this.review_count = 0;
+        this.reviewCount = 0;
         this.bookmarkCount = 0;
         this.addressDepth1 = addressDepth1;
         this.addressDepth2 = addressDepth2;

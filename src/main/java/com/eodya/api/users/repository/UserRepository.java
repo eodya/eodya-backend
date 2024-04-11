@@ -10,7 +10,7 @@ import static com.eodya.api.users.exception.UserExceptionCode.USER_NOT_FOUND;
 
 public interface UserRepository extends JpaRepository<User, Long> {
   
-    Optional<User> findByOAuthId(String oauthId);
+    Optional<User> findByOauthId(Long oauthId);
 
     default User getUserById(Long userId) {
         return findById(userId).orElseThrow(() -> new UserException(USER_NOT_FOUND, userId));

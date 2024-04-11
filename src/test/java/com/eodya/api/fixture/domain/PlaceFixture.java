@@ -14,37 +14,37 @@ import java.util.stream.IntStream;
 
 public class PlaceFixture {
 
-    private static final GeometryFactory geometryFactory = new GeometryFactory();
-
-    public static Place placeBuild(User user) {
-        Point point = pointBuild(37.5665, 126.9780);
-        String name = "테스트 스팟 장소";
-        String addressDetail = "서울특별시 강남구 논현동";
-        AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build();
-        AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build(null, addressDepth1);
-
-        return Place.builder()
-                .point(point)
-                .name(name)
-                .addressDetail(addressDetail)
-                .user(user)
-                .addressDepth1(addressDepth1)
-                .addressDepth2(addressDepth2)
-                .build();
-    }
-
-    public static List<Place> placesBuild(int count) {
-        List<Place> places = new ArrayList<>();
-
-        IntStream.range(0, count).forEach(i -> {
-            places.add(placeBuild(User.builder().build()));
-        });
-
-        return places;
-    }
-
-    public static Point pointBuild(double x, double y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        return geometryFactory.createPoint(coordinate);
-    }
+//    private static final GeometryFactory geometryFactory = new GeometryFactory();
+//
+//    public static Place placeBuild(User user) {
+//        Point point = pointBuild(37.5665, 126.9780);
+//        String name = "테스트 스팟 장소";
+//        String addressDetail = "서울특별시 강남구 논현동";
+//        AddressDepth1 addressDepth1 = AddressDepthFixture.addressDepth1Build();
+//        AddressDepth2 addressDepth2 = AddressDepthFixture.addressDepth2Build(null, addressDepth1);
+//
+//        return Place.builder()
+//                .point(point)
+//                .name(name)
+//                .addressDetail(addressDetail)
+//                .user(user)
+//                .addressDepth1(addressDepth1)
+//                .addressDepth2(addressDepth2)
+//                .build();
+//    }
+//
+//    public static List<Place> placesBuild(int count) {
+//        List<Place> places = new ArrayList<>();
+//
+//        IntStream.range(0, count).forEach(i -> {
+//            places.add(placeBuild(User.builder().build()));
+//        });
+//
+//        return places;
+//    }
+//
+//    public static Point pointBuild(double x, double y) {
+//        Coordinate coordinate = new Coordinate(x, y);
+//        return geometryFactory.createPoint(coordinate);
+//    }
 }
