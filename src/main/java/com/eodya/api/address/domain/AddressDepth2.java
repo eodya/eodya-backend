@@ -33,11 +33,8 @@ public class AddressDepth2 extends BaseEntity {
     @JoinColumn(name = "address_depth1_id")
     private AddressDepth1 addressDepth1;
 
-    @OneToMany(mappedBy = "addressDepth2")
-    private List<Place> place = new ArrayList<>();
-
     @Builder
-    public AddressDepth2(String name,AddressDepth1 addressDepth1) {
+    public AddressDepth2(String name, AddressDepth1 addressDepth1) {
         this.name = name;
         this.addressDepth1 = addressDepth1;
     }

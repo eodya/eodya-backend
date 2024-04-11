@@ -28,9 +28,6 @@ public class AddressDepth1 extends BaseEntity {
     @Column(length = 30)
     private String name;
 
-    @OneToMany(mappedBy = "addressDepth1")
-    private List<Place> place = new ArrayList<>();
-
     @Builder
     private AddressDepth1(String name) {
         this.name = name;
