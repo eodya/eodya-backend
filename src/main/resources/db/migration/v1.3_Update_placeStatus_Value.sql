@@ -1,0 +1,2 @@
+ALTER TABLE review
+    MODIFY COLUMN place_status VARCHAR(50) NOT NULL;

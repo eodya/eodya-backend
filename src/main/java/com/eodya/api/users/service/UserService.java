@@ -2,31 +2,18 @@ package com.eodya.api.users.service;
 
 import static com.eodya.api.users.exception.UserExceptionCode.ALREADY_EXIST_NICKNAME;
 
-import com.eodya.api.bookmark.domain.Bookmark;
-import com.eodya.api.bookmark.domain.BookmarkStatus;
 import com.eodya.api.bookmark.repository.BookmarkRepository;
-import com.eodya.api.place.domain.Place;
-import com.eodya.api.place.domain.PlaceStatus;
-import com.eodya.api.review.domain.Review;
 import com.eodya.api.review.repository.ReviewRepository;
 import com.eodya.api.users.config.JwtTokenManager;
 import com.eodya.api.users.domain.OAuthProvider;
 import com.eodya.api.users.domain.User;
-import com.eodya.api.users.dto.response.UserBookmarkDetail;
 import com.eodya.api.users.dto.response.UserInfoResponse;
 import com.eodya.api.users.dto.response.UserLoginResponse;
-import com.eodya.api.users.dto.response.UserMyBookmarkResponse;
-import com.eodya.api.users.dto.response.UserMyReviewsResponse;
-import com.eodya.api.users.dto.response.UserReviewDetail;
 import com.eodya.api.users.exception.UserException;
 import com.eodya.api.users.repository.UserRepository;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,17 +30,17 @@ public class UserService {
 
     @Transactional
     public UserLoginResponse login(String token) {
-       String oauthId = String.valueOf(socialService.getOAuthId(token));
-       Optional<User> findUser = userRepository.findByOAuthId(oauthId);
+       Long oauthId = Long.valueOf(socialService.getOAuthId(token));
+       Optional<User> findUser = userRepository.findByOauthId(oauthId);
 
         User user = findUser.orElseGet(() -> {
             User newUser = User.builder()
                     .nickname(SERVICE_NAME)
-                    .OAuthId(oauthId)
-                    .OAuthProvider(OAuthProvider.KAKAO)
+                    .oauthId(oauthId)
+                    .oauthProvider(OAuthProvider.KAKAO)
                     .build();
             userRepository.save(newUser);
-            newUser.setUserNickName(SERVICE_NAME+newUser.getId());
+            newUser.changeNickName(SERVICE_NAME+newUser.getId());
             return newUser;
         });
 
@@ -74,7 +61,7 @@ public class UserService {
                     throw new UserException(ALREADY_EXIST_NICKNAME);
                 });
 
-        user.setUserNickName(nickName);
+        user.changeNickName(nickName);
         userRepository.save(user);
     }
 
@@ -83,44 +70,44 @@ public class UserService {
         return UserInfoResponse.from(user);
     }
 
-    public UserMyBookmarkResponse getMyBookmarks(Long userId, Pageable pageable) {
-        Page<Bookmark> bookmarks = bookmarkRepository.findByUserIdAndStatus(userId, BookmarkStatus.TRUE, pageable);
-        boolean hasNext = bookmarks.hasNext();
+//    public UserMyBookmarkResponse getMyBookmarks(Long userId, Pageable pageable) {
+//        Page<Bookmark> bookmarks = bookmarkRepository.findByUserIdAndStatus(userId, pageable);
+//        boolean hasNext = bookmarks.hasNext();
+//
+//        List<Place> bookmarkPlaces = bookmarks.stream()
+//                                        .map(bookmark -> bookmark.getPlace())
+//                                        .toList();
+//
+//        List<UserBookmarkDetail> details = bookmarkPlaces.stream()
+//                .map((place)-> {
+//                    PlaceStatus placeStatus = place.getReviews().stream() //가장 최신의 리뷰를 가져옴
+//                            .sorted(Comparator.comparing(Review::getReviewDate).reversed())
+//                            .findFirst()
+//                            .get()
+//                            .getPlaceStatus();
+//
+//                    return UserBookmarkDetail.from(place, placeStatus);
+//                }).toList();
+//        return UserMyBookmarkResponse.from(bookmarks.getTotalElements(), details, hasNext);
+//    }
 
-        List<Place> bookmarkPlaces = bookmarks.stream()
-                                        .map(bookmark -> bookmark.getPlace())
-                                        .toList();
-
-        List<UserBookmarkDetail> details = bookmarkPlaces.stream()
-                .map((place)-> {
-                    PlaceStatus placeStatus = place.getReviews().stream() //가장 최신의 리뷰를 가져옴
-                            .sorted(Comparator.comparing(Review::getReviewDate).reversed())
-                            .findFirst()
-                            .get()
-                            .getPlaceStatus();
-
-                    return UserBookmarkDetail.from(place, placeStatus);
-                }).toList();
-        return UserMyBookmarkResponse.from(bookmarks.getTotalElements(), details, hasNext);
-    }
-
-    public UserMyReviewsResponse getMyReviews(Long userId, Pageable pageable) {
-        Page<Review> reviews = reviewRepository.findByUserId(userId, pageable);
-        boolean hasNext = reviews.hasNext();
-
-        List<UserReviewDetail> userReviews = reviews.getContent().stream()
-                .map((review -> {
-                    Place place = review.getPlace();
-
-                    PlaceStatus placeStatus = place.getReviews().stream() //가장 최신의 리뷰를 가져옴
-                            .sorted(Comparator.comparing(Review::getReviewDate).reversed())
-                            .findFirst()
-                            .get()
-                            .getPlaceStatus();
-
-                    return UserReviewDetail.from(review.getPlace(), review, placeStatus);
-                })).toList();
-
-        return UserMyReviewsResponse.from(reviews.getTotalElements(), userReviews,hasNext);
-    }
+//    public UserMyReviewsResponse getMyReviews(Long userId, Pageable pageable) {
+//        Page<Review> reviews = reviewRepository.findByUserId(userId, pageable);
+//        boolean hasNext = reviews.hasNext();
+//
+//        List<UserReviewDetail> userReviews = reviews.getContent().stream()
+//                .map((review -> {
+//                    Place place = review.getPlace();
+//
+//                    PlaceStatus placeStatus = place.getReviews().stream() //가장 최신의 리뷰를 가져옴
+//                            .sorted(Comparator.comparing(Review::getReviewDate).reversed())
+//                            .findFirst()
+//                            .get()
+//                            .getPlaceStatus();
+//
+//                    return UserReviewDetail.from(review.getPlace(), review, placeStatus);
+//                })).toList();
+//
+//        return UserMyReviewsResponse.from(reviews.getTotalElements(), userReviews,hasNext);
+//    }
 }

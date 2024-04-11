@@ -52,19 +52,19 @@ public class UsersController {
         return ResponseEntity.ok().body(userService.getMyInfo(userId));
     }
 
-    @GetMapping("/my/bookmarks")
-    public ResponseEntity<UserMyBookmarkResponse> getMyBookmarks(
-            @Login Long userId,
-            @PageableDefault(sort = "updatedAt", direction = Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok()
-                .body(userService.getMyBookmarks(userId, pageable));
-    }
-
-    @GetMapping("/my/reviews")
-    public ResponseEntity<UserMyReviewsResponse> getMyReviews(
-            @Login Long userId,
-            @PageableDefault(sort = "updatedAt", direction = Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok()
-                .body(userService.getMyReviews(userId, pageable));
-    }
+//    @GetMapping("/my/bookmarks")
+//    public ResponseEntity<UserMyBookmarkResponse> getMyBookmarks(
+//            @Login Long userId,
+//            @PageableDefault(sort = "updatedAt", direction = Direction.DESC) Pageable pageable) {
+//        return ResponseEntity.ok()
+//                .body(userService.getMyBookmarks(userId, pageable));
+//    }
+//
+//    @GetMapping("/my/reviews")
+//    public ResponseEntity<UserMyReviewsResponse> getMyReviews(
+//            @Login Long userId,
+//            @PageableDefault(sort = "updatedAt", direction = Direction.DESC) Pageable pageable) {
+//        return ResponseEntity.ok()
+//                .body(userService.getMyReviews(userId, pageable));
+//    }
 }

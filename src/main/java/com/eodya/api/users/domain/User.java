@@ -1,23 +1,8 @@
 package com.eodya.api.users.domain;
 
-import com.eodya.api.bookmark.domain.Bookmark;
 import com.eodya.api.common.entity.BaseEntity;
-import com.eodya.api.recommendation.domain.Recommendation;
-import com.eodya.api.review.domain.Review;
-import com.eodya.api.place.domain.Place;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//todo - bookmark, recommend status = true
 public class User extends BaseEntity {
 
     @Id
@@ -41,38 +25,34 @@ public class User extends BaseEntity {
     private String nickname;
 
     @NotNull
-    @Column(name = "oauth_id")
-    private String OAuthId;
+    @Column(unique = true)
+    private Long oauthId;
 
-    @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "oauth_provider")
-    private OAuthProvider OAuthProvider;
+    @Enumerated(value = EnumType.STRING)
+    private OAuthProvider oauthProvider;
 
-    @OneToMany(mappedBy = "user")
-    private List<Place> places = new ArrayList<>();
+    @Embedded
+    private UserPlace userPlace = new UserPlace();
 
-    @OneToMany(mappedBy = "user")
-    private List<Review> reviews = new ArrayList<>();
+    @Embedded
+    private UserReview userReview = new UserReview();
 
-    @OneToMany(mappedBy = "user")
-    private List<Bookmark> bookmarks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<Recommendation> recommendations = new ArrayList<>();
+    @Embedded
+    private UserBookmark userBookmark = new UserBookmark();
 
     @Builder
     private User(
             String nickname,
-            String OAuthId,
-            OAuthProvider OAuthProvider
+            Long oauthId,
+            OAuthProvider oauthProvider
     ) {
         this.nickname = nickname;
-        this.OAuthId = OAuthId;
-        this.OAuthProvider = OAuthProvider;
+        this.oauthId = oauthId;
+        this.oauthProvider = oauthProvider;
     }
 
-    public void setUserNickName(String nickname) {
+    public void changeNickName(String nickname) {
         this.nickname = nickname;
     }
 }

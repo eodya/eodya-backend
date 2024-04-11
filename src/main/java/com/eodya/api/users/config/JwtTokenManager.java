@@ -14,7 +14,6 @@ import javax.xml.bind.DatatypeConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
