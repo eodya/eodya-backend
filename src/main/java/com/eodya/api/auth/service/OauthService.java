@@ -100,9 +100,5 @@ public class OauthService {
 
         throw new AuthException(AUTH_FAIL_TO_VALIDATE_TOKEN);
     }
-
-    public void deleteRefreshToken(String refreshToken) {
-        redisRepository.deleteHash(REFRESH_TOKEN_KEY, refreshToken);
-    }
 }
 
