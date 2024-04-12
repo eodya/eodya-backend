@@ -11,7 +11,6 @@ public class KakaoOauthProperties {
 
     private String clientId;
     private String clientSecret;
-    private String[] scope;
     private String authUrl;
     private String redirectUrl;
     private String userUrl;

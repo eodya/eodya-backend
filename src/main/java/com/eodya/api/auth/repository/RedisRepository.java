@@ -25,12 +25,4 @@ public class RedisRepository {
     public <T> T findHash(String key, String field) {
         return (T) hashOperations.get(key, field);
     }
-
-    public Boolean existsHash(String key, String field) {
-        return hashOperations.hasKey(key, field);
-    }
-
-    public void deleteHash(String key, String field) {
-        hashOperations.delete(key, field);
-    }
 }
