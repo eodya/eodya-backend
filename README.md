@@ -33,6 +33,14 @@
 
 <br/>
 
+### 🧱 개발 아키텍처
+
+---
+
+![개발 아키텍처](https://github.com/user-attachments/assets/52f23b1c-700c-49f8-9852-b4e1c0a0c471)
+
+<br/>
+
 ### 🙋🏻‍♂️ 프로젝트 멤버
 
 ---
